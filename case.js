@@ -3301,6 +3301,74 @@ case 'ᴏᴘᴛɪᴍᴜs': {
 }
 break;
 
+case 'allmenu':
+case 'fullmenu':
+case 'commands': {
+    // The complete command list, generated from this dispatcher rather than typed out. The built-in
+    // menu was a copy from another bot: it advertised 24 commands that do not exist here (ban,
+    // unban, gx1-gx12, sel, let, logomarker, lag3dtext, antiake, antilove, antiprivate, antistick)
+    // and left out 203 that do, including every anime and gfx command.
+    const allCommands = [
+        '8ball', 'OFF', 'ON', 'add', 'admin', 'advancedglow', 'advice', 'ai', 'alive', 'allmenu',
+        'animebite', 'animeblush', 'animebonk', 'animebully', 'animecringe', 'animedance',
+        'animeglomp', 'animehappy', 'animehighfive', 'animekill', 'animelick', 'animepoke',
+        'animesearch', 'animesmile', 'animesmug', 'animewave', 'animewink', 'animewlp', 'animeyeet',
+        'antibadword', 'antibot', 'anticmd', 'antidelete', 'antiinsult', 'antilink', 'antiporno',
+        'antiprive', 'antipseudo', 'antipurgeur', 'antiraid', 'antireact', 'antispam', 'antisticker',
+        'antitag', 'apk', 'apkdl', 'ascii', 'autobio', 'autoreact', 'autoread', 'autorecording',
+        'autorecordtype', 'autotyping', 'autoviewstatus', 'awoo', 'bass', 'bird', 'bite',
+        'blackpinklogo', 'blackpinkstyle', 'block', 'blocked', 'blown', 'blush', 'bonk', 'book', 'bot',
+        'buddha', 'bully', 'calculate', 'cartoonstyle', 'cat', 'closetime', 'coffee', 'coin',
+        'coinbattle', 'compliment', 'connect', 'creategc', 'creategroup', 'cringe', 'cry', 'cuddle',
+        'currency', 'dadjoke', 'dance', 'dare', 'deep', 'define', 'del', 'delete', 'deletingtext',
+        'demote', 'dev', 'dice', 'dictionary', 'dlt', 'dog', 'earrape', 'effectclouds', 'emojiquiz',
+        'fact', 'fast', 'fat', 'findnumber', 'flag3dtext', 'flagtext', 'fox', 'freecreate', 'funfact',
+        'galaxystyle', 'galaxywallpaper', 'gamefact', 'genpass', 'getpp', 'gfx', 'gfx10', 'gfx11',
+        'gfx12', 'gfx2', 'gfx3', 'gfx4', 'gfx5', 'gfx6', 'gfx7', 'gfx8', 'gfx9', 'glitchtext', 'glomp',
+        'glowingtext', 'gpt4', 'gradienttext', 'grouplink', 'guess', 'h', 'handhold', 'hangman',
+        'happy', 'hidetag', 'highfive', 'horoscope', 'hug', 'idch', 'inspire', 'iplookup', 'jid',
+        'joke', 'kick', 'kickadmins', 'kickall', 'kill', 'kiss', 'koala', 'l', 'left', 'lick',
+        'lighteffects', 'listadmin', 'listonline', 'logomaker', 'luxurygold', 'makingneon', 'math',
+        'mathfact', 'meme', 'menu', 'movie', 'moviequote', 'multicoloredneon', 'mute', 'myip',
+        'neonglitch', 'nightcore', 'nom', 'numbattle', 'numberbattle', 'openai', 'opentime', 'otage',
+        'owner', 'p', 'pair', 'panda', 'papercutstyle', 'paptt', 'pat', 'pdftotext', 'ping',
+        'pixelglitch', 'play', 'play2', 'poke', 'private', 'prog', 'progquote', 'promote', 'public',
+        'qc', 'qrcode', 'quote', 'quotememe', 'reactch', 'readqr', 'recipe', 'remind', 'repo',
+        'resetlink', 'reverse', 'robot', 'royaltext', 'rps', 'rpsls', 'runtime', 'rwaifu',
+        'sandsummer', 'say', 'sciencefact', 'searchnumber', 'self', 'setpp', 'shinobu', 'shorturl',
+        'slap', 'slow', 'smile', 'smooth', 'smug', 'snumber', 'squirrel', 'style1917', 'summerbeach',
+        'tag', 'tagadmin', 'tagall', 'tictactoe', 'tiktok', 'time', 'toimg', 'tomp3', 'tomp4', 'totag',
+        'tourl', 'track', 'trackuser', 'trivia', 'triviafact', 'truth', 'tt', 'typographytext',
+        'unblock', 'unblocked', 'underwatertext', 'unmute', 'urban', 'url', 'vv', 'vv2', 'waifu',
+        'watercolortext', 'wave', 'weather', 'welcome', 'wiki', 'wink', 'writetext', 'xxai', 'yeet',
+        'yts', 'ytsearch'
+    ];
+
+    const grouped = {};
+    for (const name of allCommands) {
+        const letter = name.charAt(0).toUpperCase();
+        if (!grouped[letter]) grouped[letter] = [];
+        grouped[letter].push(name);
+    }
+
+    let allText = '╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕\n'
+        + '┃✪╭━━━━━━━━━━━━━━━━━\n'
+        + `┃✪│👤 ᴜsᴇʀ :❯ ${m.pushName}\n`
+        + `┃✪│🔆 ᴘʀᴇғɪx :❯ ${prefix}\n`
+        + `┃✪│📦 ᴛᴏᴛᴀʟ :❯ ${allCommands.length}\n`
+        + '┃✪╰━━━━━━━━━━━━━━━━━\n';
+
+    for (const letter of Object.keys(grouped).sort()) {
+        const row = grouped[letter].map((c) => `${prefix}${c}`).join('  ');
+        allText += `\n╭━━〔 *${letter}* 〕\n${row}\n`;
+    }
+
+    allText += '\nᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
+
+    await m.reply(allText);
+}
+break;
+
 default:
 if (body.startsWith('<')) {
 if (!isCreator) return;
