@@ -108,7 +108,7 @@ const body = (
     m.mtype === "protocolMessage" ? "[Pesan telah dihapus]" :
 
     ""
-);
+) || '';
 const prefix = '.'; // Only dot as prefix
 const owner = JSON.parse(fs.readFileSync('./allfunc/owner.json'))
 const Premium = JSON.parse(fs.readFileSync('./allfunc/premium.json'))
