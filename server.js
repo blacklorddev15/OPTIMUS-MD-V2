@@ -1,11 +1,14 @@
-require('dotenv').config();
+// From this folder rather than the working directory: hosts do not always start the process where
+// the files live, and a .env sitting next to server.js must still be found when they don't.
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// Pterodactyl passes the allocation as SERVER_PORT, Render as PORT.
+const PORT = process.env.PORT || process.env.SERVER_PORT || 3000;
 
 const WEB_URL = process.env.WEB_URL || '*';
 const API_SECRET = process.env.API_SECRET || '';
@@ -113,6 +116,15 @@ app.use((req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ HTTP API server running on port ${PORT}`);
+
+  // LINK TO THE VARNOX WEBSITE -------------------------------------------------
+  // Publishes the heartbeat the dashboard reads, drains the website's pairing queue
+  // through POST /api/pair, and mirrors paired sessions so they appear on the site.
+  // Starts after listen(), because it calls back into this very server. Silent when
+  // no database is configured, so using the bot without the website is unchanged.
+  require('./lib/siteBridge').startSiteBridge()
+    .then((bridge) => { global.siteBridge = bridge; })
+    .catch((error) => console.error('[site-bridge] failed to start:', error.message));
 });
 
 module.exports = app;

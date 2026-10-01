@@ -14,3 +14,6 @@ allfunc/userTrack.json
 *.log
 .DS_Store
 Thumbs.db
+
+# Holds a connection string: committing it would publish a credential
+database-url.txt

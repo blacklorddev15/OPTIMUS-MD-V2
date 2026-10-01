@@ -2,7 +2,7 @@
    DEV BY @Varnox_Or_novark
    MY OPTIMUS SHALL COME BACK
 */
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const fs = require('fs');
 const readline = require('readline');
 const chalk = require('chalk');

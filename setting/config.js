@@ -1,5 +1,20 @@
-require('dotenv').config();
+// From this folder rather than the working directory, so the bot finds the same .env as server.js
+// even when the host starts it from somewhere else.
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const fs = require('fs');
+
+// ── VARNOX website database ──────────────────────────────────────────────────
+// Used by lib/siteBridge.js to link this bot to the website. Read LAST, so a value
+// supplied by the host, by .env or by database-url.txt always wins over this one.
+// Paste the whole connection string between the quotes, on one line:
+//
+//   global.databaseUrl = 'postgresql://user:pass@host/db?sslmode=require';
+//
+// ⚠️ WARNING — this file is tracked in a PUBLIC repository. Committing a real value
+// publishes that credential to anyone who can read the repo, and it grants full
+// access to every table in that database. Prefer .env or database-url.txt, which
+// .gitignore already covers. Never `git add setting/config.js` after pasting a value.
+global.databaseUrl = process.env.DATABASE_URL || '';
 
 global.owner = process.env.OWNER_NUMBER || '224669288332';
 global.footer = '𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
