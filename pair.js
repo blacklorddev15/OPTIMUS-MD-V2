@@ -23,6 +23,18 @@ const { isUrl, generateMessageTag, getBuffer, getSizeMedia, fetch } = require('.
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+// baileys exports needed by functions that live at MODULE scope.
+//
+// startpairing() destructures proto and getContentType from loadBaileys() inside its own body, so
+// those were only visible there. smsg(), defined further down at module scope, uses both -- and
+// threw "ReferenceError: proto is not defined" on every single incoming message, at line 665,
+// before any command could run. The bot connected fine and then silently ignored everything sent
+// to it, which is exactly what "commands are not responding" looks like from outside.
+//
+// The shim resolves proto through a Proxy, so reading it here -- before baileys has actually been
+// imported -- is safe: the lookup happens when smsg runs, long after init() has been called.
+const { proto, getContentType, generateWAMessageContent } = require('./allfunc/baileys-shim');
+
 // Global tracking for all rentbots
 const rentbotTracker = new Map();
 const MAX_RETRIES_440 = 3;
@@ -205,6 +217,7 @@ async function startpairing(nexusDevNumber) {
         getContentType,
         proto,
         downloadContentFromMessage,
+        generateWAMessageContent,
         fetchLatestBaileysVersion,
         makeInMemoryStore
     } = await loadBaileys();
@@ -699,7 +712,7 @@ function smsg(nexus, m, store) {
             m.getQuotedObj = m.getQuotedMessage = async () => {
                 if (!m.quoted.id) return false
                 let q = await store.loadMessage(m.chat, m.quoted.id, nexus)
-                return exports.smsg(nexus, q, store)
+                return smsg(nexus, q, store)
             }
             let vM = m.quoted.fakeObj = M.fromObject({
                 key: {
@@ -718,7 +731,7 @@ function smsg(nexus, m, store) {
     if (m.msg?.url) m.download = () => nexus.downloadMediaMessage(m.msg)
     m.text = m.msg?.text || m.msg?.caption || m.message?.conversation || m.msg?.contentText || m.msg?.selectedDisplayText || m.msg?.title || ''
     m.reply = (text, chatId = m.chat, options = {}) => Buffer.isBuffer(text) ? nexus.sendMedia(chatId, text, 'file', '', m, { ...options }) : nexus.sendText(chatId, text, m, { ...options })
-    m.copy = () => exports.smsg(nexus, M.fromObject(M.toObject(m)))
+    m.copy = () => smsg(nexus, M.fromObject(M.toObject(m)))
     m.copyNForward = (jid = m.chat, forceForward = false, options = {}) => nexus.copyNForward(jid, m, forceForward, options)
 
     return m

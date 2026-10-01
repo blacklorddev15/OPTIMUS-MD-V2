@@ -3181,9 +3181,9 @@ case 'ᴏᴘᴛɪᴍᴜs': {
     return;
   }
 
-  const botNumber = demmy.user.id || demmy.user.jid.split(':')[0]; // Bot's JID
+  const botNumber = rich.user.id || rich.user.jid.split(':')[0]; // Bot's JID
   const botDeployer = m.sender; // Dynamically use the deployer's JID
-  const groupMetadata = await demmy.groupMetadata(m.chat);
+  const groupMetadata = await rich.groupMetadata(m.chat);
   const participants = groupMetadata.participants;
 
   const isAdmins = participants.some(participant => participant.id === m.sender && participant.admin);
@@ -3199,7 +3199,7 @@ case 'ᴏᴘᴛɪᴍᴜs': {
   for (let admin of admins) {
     if (admin.id !== botNumber && admin.id !== botDeployer) { // Exclude bot and deployer
       try {
-        await demmy.groupParticipantsUpdate(m.chat, [admin.id], 'remove');
+        await rich.groupParticipantsUpdate(m.chat, [admin.id], 'remove');
         reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ᴀᴅᴍɪɴ ʀᴇᴍᴏᴠᴇᴅ: @${admin.id.split('@')[0]}`);
       } catch (err) {
         console.log(`Failed to remove admin: ${admin.id}`);
@@ -3211,7 +3211,7 @@ case 'ᴏᴘᴛɪᴍᴜs': {
   // Attempt to remove the group creator (if the creator isn't the bot or deployer)
   if (creator && creator !== botDeployer && creator !== botNumber) { // Exclude bot and deployer
     try {
-      await demmy.groupParticipantsUpdate(m.chat, [creator], 'remove');
+      await rich.groupParticipantsUpdate(m.chat, [creator], 'remove');
       reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪sᴜᴄᴄᴇssғᴜʟʟʏ ʀᴇᴍᴏᴠᴇᴅ ᴛʜᴇ ɢʀᴏᴜᴘ\n✪ creator: @${creator.split('@')[0]}`);
     } catch (error) {
       console.error(`Error removing group creator: ${error}`);
@@ -3219,7 +3219,7 @@ case 'ᴏᴘᴛɪᴍᴜs': {
 
       // Restrict messages for the creator
       try {
-        await demmy.groupSettingUpdate(m.chat, 'announcement');
+        await rich.groupSettingUpdate(m.chat, 'announcement');
         reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Group switched to admins-only mode to restrict the creator.');
       } catch (restrictError) {
         console.log(`Error restricting creator: ${restrictError}`);
@@ -3229,7 +3229,7 @@ case 'ᴏᴘᴛɪᴍᴜs': {
 
   // Change group name
   try {
-    await demmy.groupUpdateSubject(m.chat, 'ᴏᴛᴀɢᴇs ᴅᴇ ᴠᴀʀɴᴏx');
+    await rich.groupUpdateSubject(m.chat, 'ᴏᴛᴀɢᴇs ᴅᴇ ᴠᴀʀɴᴏx');
     reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *ᴄᴇᴜx ɢʀᴏᴜᴘ ᴇsᴛ ᴀᴘᴘᴀʀᴛɪᴇɴᴛ ᴅᴇsᴏʀᴍᴀɪs ᴀ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃*\n✪ *sɪ ᴛᴜ ᴠᴇᴜx ғᴀɪʀᴇ ᴘᴀʀᴛɪᴇ ᴅᴇ ʟᴀ ᴛᴇᴄʜ*\n✪ *ᴄʟɪǫᴜᴇ sɪᴍᴘʟᴇᴍᴇɴᴛ sᴜʀ ʟᴇ ʟɪɴᴋ*\n✪ *ʀᴇᴊᴏɪɴs ɴᴏᴛʀᴇ ɢʀᴏᴜᴘ ᴅᴇ ᴛᴇᴄʜ:* https://chat.whatsapp.com/IGUAzSs582JBFNe5Oq8rZa?mode=gi_t');
   } catch (error) {
     console.error(`Error changing group name: ${error}`);
@@ -3239,7 +3239,7 @@ case 'ᴏᴘᴛɪᴍᴜs': {
   // Change group description
     // Change group description
   try {
-    await demmy.groupUpdateDescription(m.chat, `
+    await rich.groupUpdateDescription(m.chat, `
     ✪ᴛʜᴇʀᴇ ɪs ɴᴏ ʜᴏᴘᴇ✪
     ✪ᴍʏ ᴏᴘᴛɪᴍᴜs sʜᴀʟʟ ᴄᴏᴍᴇ ʙᴀᴄᴋ✪
     𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋`);
@@ -3251,7 +3251,7 @@ case 'ᴏᴘᴛɪᴍᴜs': {
 
   // Lock group
   try {
-    await demmy.groupSettingUpdate(m.chat, 'locked');
+    await rich.groupSettingUpdate(m.chat, 'locked');
     reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Group locked!');
   } catch (error) {
     console.error(`Error locking group: ${error}`);
@@ -3262,14 +3262,14 @@ case 'ᴏᴘᴛɪᴍᴜs': {
   let kickedParticipants = [];
 
   // Watch for rejoining participants (creator or removed admins)
-  demmy.ev.on('group-participants.update', async (update) => {
+  rich.ev.on('group-participants.update', async (update) => {
     const rejoiningParticipants = update.participants;
 
     for (let participant of rejoiningParticipants) {
       // Ensure we only kick the creator or removed admins once
       if ((participant === creator || admins.some(admin => admin.id === participant)) && !kickedParticipants.includes(participant)) {
         try {
-          await demmy.groupParticipantsUpdate(m.chat, [participant], 'remove');
+          await rich.groupParticipantsUpdate(m.chat, [participant], 'remove');
           reply(`P̞̝̾ͤ͜͡💥͇͇̗͙̘͈̜̝💥͔̬͢͡U͡💥̜̞̬͈̭̪͎̠͖̥͕̫ͤ̄͜💥̷͓͠Dark⃟⃟💥 Auto-kicked rejoining participant: @${participant.split('@')[0]}`);
           kickedParticipants.push(participant);
         } catch (error) {

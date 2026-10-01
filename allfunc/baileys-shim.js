@@ -43,6 +43,14 @@ module.exports.extractMessageContent = function (msg) {
     return msg;
 };
 
+// Used by pair.js when it builds a media message for waUploadToServer. It has to come through
+// here: that call site sits outside the block where startpairing() destructures the other baileys
+// exports, so a plain destructuring there never reached it.
+module.exports.generateWAMessageContent = async function (...args) {
+    if (_cache && _cache.generateWAMessageContent) return _cache.generateWAMessageContent(...args);
+    throw new Error('baileys not yet initialised');
+};
+
 module.exports.jidNormalizedUser = function (j) {
     if (_cache && _cache.jidNormalizedUser) return _cache.jidNormalizedUser(j);
     return j;
