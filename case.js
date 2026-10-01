@@ -499,11 +499,31 @@ ${readMore}
         }
     };
 
-    // Send the menu image with the caption
-    await rich.sendMessage(from, {
-        image: { url: richImageUrl },
-        caption: menuText
-    }, { quoted: fakeSystem });
+    // Send the menu image with the caption.
+    //
+    // This was a single unlucky await: if the image host failed, the send threw, the
+    // dispatcher's catch swallowed it, and .menu answered with nothing at all. That host is a
+    // third party and it currently answers 402 Payment Required, so fall back to an image
+    // shipped in ./media, and then to plain text. The menu must never be silent.
+    try {
+        await rich.sendMessage(from, {
+            image: { url: richImageUrl },
+            caption: menuText
+        }, { quoted: fakeSystem });
+    } catch (menuImageError) {
+        try {
+            const menuFs = require('fs');
+            const localMenuImage = ['./media/rich.jpg', './media/image1.jpg', './media/thumb.jpg']
+                .find((candidate) => menuFs.existsSync(candidate));
+            if (!localMenuImage) throw menuImageError;
+            await rich.sendMessage(from, {
+                image: menuFs.readFileSync(localMenuImage),
+                caption: menuText
+            }, { quoted: fakeSystem });
+        } catch (menuLocalError) {
+            await rich.sendMessage(from, { text: menuText }, { quoted: fakeSystem });
+        }
+    }
 }
 break;
 case 'welcome': {
@@ -3314,6 +3334,12 @@ if (stdout) return m.reply(stdout)
 }
 } catch (err) {
 console.log(require("util").format(err));
+// A swallowed error here is exactly how a command goes silent: this catch takes everything,
+// and on a panel Node buffers stdout, so the reason never becomes visible. Record it.
+try {
+require('fs').appendFileSync('errors.log',
+`[${new Date().toISOString()}] dispatcher: ${err && err.stack ? err.stack : require("util").format(err)}\n`);
+} catch (ignored) {}
 }
 if (rich.ws && rich.ws.readyState !== rich.ws.OPEN) { try { rich.ev.emit('connection.update', { connection: 'close' }); } catch(e) {} }
 }  // closes module.exports async function

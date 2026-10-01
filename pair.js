@@ -394,7 +394,14 @@ async function startpairing(nexusDevNumber) {
             mek = smsg(nexusboiConnect, nexusboijid, store);
             require("./case")(nexusboiConnect, mek, chatUpdate, store);
         } catch (err) {
+            // Also to a file. Everything a message goes through is inside this one try, so a
+            // failure here means the message simply gets no answer -- and with stdout buffered on
+            // a panel, console.log on its own shows nothing.
             console.log(err);
+            try {
+                require('fs').appendFileSync('errors.log',
+                    `[${new Date().toISOString()}] upsert: ${err && err.stack ? err.stack : err}\n`);
+            } catch (ignored) {}
         }
     });
 
