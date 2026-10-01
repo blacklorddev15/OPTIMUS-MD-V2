@@ -324,9 +324,12 @@ async function startpairing(nexusDevNumber) {
         keepAliveIntervalMs: 15000,
         emitOwnEvents: true,
         fireInitQueries: true,
-        generateHighQualityLinkPreview: true,
-        syncFullHistory: true,
-        markOnlineOnConnect: true,
+        // These three match the Titan bot, whose sockets stay up on this host. All three were the
+        // expensive setting here: a full history sync on every connect, a link preview fetched for
+        // every message containing a URL, and a presence update pushed on connect.
+        generateHighQualityLinkPreview: false,
+        syncFullHistory: false,
+        markOnlineOnConnect: false,
     })
     
     tracker.connection = nexus;
@@ -679,73 +682,36 @@ async function startpairing(nexusDevNumber) {
         const tracker = rentbotTracker.get(nexusDevNumber);
 
         if (connection === "close") {
-            let reason = new Boom(lastDisconnect?.error)?.output.statusCode;
+            const reason = lastDisconnect?.error?.output?.statusCode;
             console.log(chalk.yellow(`🔌 Connection closed for ${nexusDevNumber}, reason: ${reason}`));
 
-              if (reason === 405) {
-                  // A 405 means the connection failed. It is not proof that the credentials are
-                  // dead, and deleting the session the moment it appeared meant a single failed
-                  // reconnect -- which is exactly what a restart is -- cost the user their pairing
-                  // and forced them to pair again. Look at what is actually on disk first: retry
-                  // while the credentials are intact, and only remove a session that is unusable.
-                  const usable = await validateSession(nexusDevNumber);
-                  if (usable && (tracker.retryCount || 0) < MAX_RETRIES_405) {
-                      tracker.retryCount = (tracker.retryCount || 0) + 1;
-                      console.log(chalk.yellow(`⚠️ 405 for ${nexusDevNumber}: session intact, retry ${tracker.retryCount}/${MAX_RETRIES_405}`));
-                      await sleep(5000);
-                      queuePairing(nexusDevNumber);
-                      return;
-                  }
-                  console.log(chalk.red.bold(`❌ 405 for ${nexusDevNumber}: session unusable after ${tracker.retryCount || 0} tries`));
-                  forceCleanupSession(nexusDevNumber);
-                  tracker.disconnected = true;
-                  tracker.connection = null;
-                  console.log(chalk.red(`🚫 ${nexusDevNumber} will NOT reconnect. User must re-pair.`));
-                  return;
-            } else if (reason === 440) {
-                if (tracker.retryCount < MAX_RETRIES_440) {
-                    console.warn(chalk.yellow(`⚠️ Error 440 for ${nexusDevNumber}. Retry ${tracker.retryCount}/${MAX_RETRIES_440}...`));
-                    await sleep(3000);
-                    queuePairing(nexusDevNumber);
-                } else {
-                    console.error(chalk.red.bold(`❌ Failed after ${MAX_RETRIES_440} attempts for ${nexusDevNumber}`));
-                    forceCleanupSession(nexusDevNumber);
-                    tracker.disconnected = true;
-                }
-            } else if (reason === DisconnectReason.badSession) {
-                console.log(chalk.red(`❌ Invalid Session for ${nexusDevNumber}`));
+            // One close rule, modelled on the Titan bot: a session is deleted on exactly one
+            // condition, loggedOut. Every other close is treated as a dropped socket and simply
+            // reconnected.
+            //
+            // This replaces a per-reason ladder that caused two separate problems. It deleted the
+            // session on badSession (500), which is how a working pairing vanished between one
+            // message and the next -- WhatsApp hiccupping is not the same as the credentials being
+            // dead, and re-pairing is a manual step the owner should not be pushed into for it. And
+            // the 440 branch never incremented retryCount while 'open' reset it to zero, so the
+            // counter could never reach its own limit and the branch was an unbounded loop.
+            if (reason === DisconnectReason.loggedOut) {
+                console.log(chalk.bgRed(`❌ ${nexusDevNumber} logged out — the session really is dead`));
                 forceCleanupSession(nexusDevNumber);
                 tracker.disconnected = true;
-            } else if (reason === DisconnectReason.loggedOut) {
-                console.log(chalk.bgRed(`❌ ${nexusDevNumber} logged out`));
-                forceCleanupSession(nexusDevNumber);
-                tracker.disconnected = true;
-            } else if (reason === DisconnectReason.connectionClosed || 
-                       reason === DisconnectReason.connectionLost || 
-                       reason === DisconnectReason.timedOut) {
-                const isValid = await validateSession(nexusDevNumber);
-                if (isValid) {
-                    console.log(chalk.yellow(`🔄 Reconnecting ${nexusDevNumber}...`));
-                    await sleep(3000);
-                    queuePairing(nexusDevNumber);
-                } else {
-                    console.log(chalk.red(`❌ Invalid session for ${nexusDevNumber}`));
-                    tracker.disconnected = true;
-                }
-            } else if (reason === DisconnectReason.restartRequired) {
-                console.log(chalk.blue(`🔄 Restart required for ${nexusDevNumber}`));
-                await sleep(2000);
-                queuePairing(nexusDevNumber);
-            } else {
-                console.log(chalk.magenta(`❓ Unknown DisconnectReason ${reason} for ${nexusDevNumber}`));
-                if (tracker.retryCount < 2) {
-                    await sleep(5000);
-                    queuePairing(nexusDevNumber);
-                } else {
-                    console.log(chalk.red(`❌ Max retries for ${nexusDevNumber}`));
-                    tracker.disconnected = true;
-                }
+                tracker.connection = null;
+                console.log(chalk.red(`🚫 ${nexusDevNumber} will NOT reconnect. User must re-pair.`));
+                return;
             }
+
+            // Back off and reconnect. The delay only grows while the socket keeps failing without
+            // ever opening, so a genuinely unreachable session is retried gently rather than in a
+            // tight loop -- but it is never deleted.
+            tracker.retryCount = (tracker.retryCount || 0) + 1;
+            const backoff = Math.min(3000 * tracker.retryCount, 30000);
+            console.log(chalk.yellow(`🔄 Reconnecting ${nexusDevNumber} in ${backoff}ms (attempt ${tracker.retryCount})`));
+            await sleep(backoff);
+            queuePairing(nexusDevNumber);
         } else if (connection === "open") {
             console.log(chalk.bgGreen.black(`✅ Connected: ${nexusDevNumber}`));
             tracker.retryCount = 0;
