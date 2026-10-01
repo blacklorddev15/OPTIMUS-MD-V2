@@ -136,7 +136,7 @@ async function restorePairedSessions() {
 
   if (!sessions.length) {
     console.log('🔁 No paired sessions to restore yet.');
-    return;
+    return [];
   }
 
   console.log(`🔁 Restoring ${sessions.length} paired session(s)...`);
@@ -150,6 +150,49 @@ async function restorePairedSessions() {
       console.error(`🔁 ${jid} could not resume: ${error.message}`);
     }
     await new Promise((resolve) => setTimeout(resolve, 2000));   // one at a time
+  }
+
+  return sessions;
+}
+
+// ─── RE-PAIR BY ITSELF ───────────────────────────────────────────────────────
+// When a number loses its session -- WhatsApp logging the device out, or a connect that ended with
+// the credentials being discarded -- the bot used to stop at "user must re-pair" and then nothing
+// happened until somebody noticed. Now it asks for a fresh code on its own, once per number per
+// run, and leaves a marker so the website can publish that code where the owner will see it.
+//
+// Once, not in a loop, and deliberately so: every pairing links another device, and WhatsApp only
+// allows four.
+const autoRepairTried = new Set();
+const AUTO_REPAIR_MARKER = './richstore/pairing/auto-repair.json';
+const AUTO_REPAIR_EVERY_MS = 60_000;
+
+function sessionIsRegistered(jid) {
+  try {
+    const creds = JSON.parse(fs.readFileSync(path.join('./richstore/pairing', jid, 'creds.json'), 'utf8'));
+    return Boolean(creds && creds.registered);
+  } catch (ignored) {
+    return false;                 // gone, empty or unreadable: it needs pairing
+  }
+}
+
+async function autoRepairSessions(known) {
+  const startpairing = require('./pair.js');
+
+  for (const jid of known) {
+    if (autoRepairTried.has(jid)) continue;
+    if (sessionIsRegistered(jid)) continue;
+
+    autoRepairTried.add(jid);
+    console.log(`🛠️ ${jid} has no usable session — requesting a pairing code automatically`);
+
+    try {
+      await startpairing(jid);
+      fs.writeFileSync(AUTO_REPAIR_MARKER, JSON.stringify({ number: jid, at: Date.now() }));
+      console.log(`🛠️ ${jid}: a fresh code has been requested; the website will publish it`);
+    } catch (error) {
+      console.error(`🛠️ ${jid}: could not start pairing — ${error.message}`);
+    }
   }
 }
 
@@ -167,8 +210,20 @@ app.listen(PORT, '0.0.0.0', () => {
 
   // Bring back the numbers that are already paired, so restarting does not look like losing the
   // pairing. Delayed a few seconds to let the socket layer and the bridge settle first.
-  setTimeout(() => {
-    restorePairedSessions().catch((error) => console.error('[restore] failed:', error.message));
+  setTimeout(async () => {
+    let known = [];
+    try {
+      known = await restorePairedSessions();
+    } catch (error) {
+      console.error('[restore] failed:', error.message);
+    }
+
+    // Then keep an eye on them: a session can also die later, after a successful start.
+    if (known.length) {
+      setInterval(() => {
+        autoRepairSessions(known).catch((error) => console.error('[auto-repair] failed:', error.message));
+      }, AUTO_REPAIR_EVERY_MS).unref?.();
+    }
   }, 5000);
 });
 
