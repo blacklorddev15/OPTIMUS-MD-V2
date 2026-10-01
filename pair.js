@@ -199,7 +199,29 @@ function ensureDirectoryExists(dirPath) {
 async function startpairing(nexusDevNumber) {
     // Ensure base directory exists
     ensureDirectoryExists('./richstore/pairing');
-    
+
+    // ── One socket per number, enforced ──────────────────────────────────────────────────────
+    // This function is called from two independent places -- the startup restore in server.js and
+    // every pairing request -- and it used to overwrite tracker.connection without closing what
+    // was there. A second live socket for one number is not a retry: WhatsApp replaces the loser
+    // with 440, the loser reconnects in its turn, and the two trade the number back and forth
+    // forever. The socket is then never up long enough to be handed a pairing code, which is
+    // exactly what "the website is not generating a code" looked like from the outside -- and the
+    // abandoned sockets piled up until the container ran out of memory and died.
+    //
+    // So: reuse a socket that is still up, and close one that is not before replacing it.
+    const tracked = rentbotTracker.get(nexusDevNumber);
+    if (tracked && tracked.connection) {
+        const liveSocket = tracked.connection.ws;
+        if (liveSocket && liveSocket.readyState === 1) {
+            tracked.lastActivity = Date.now();
+            return tracked.connection;
+        }
+        try { tracked.connection.end(new Error('superseded')); } catch (ignored) {}
+        try { liveSocket?.close(); } catch (ignored) {}
+        tracked.connection = null;
+    }
+
     if (!rentbotTracker.has(nexusDevNumber)) {
         rentbotTracker.set(nexusDevNumber, {
             connection: null,
@@ -288,16 +310,21 @@ async function startpairing(nexusDevNumber) {
             throw new Error('Invalid phone number');
         }
         
-        setTimeout(async () => {
+        // Ask for the code as soon as the socket will accept the request, rather than sitting on a
+        // flat 3s timeout. That timeout was the whole cost of a pairing: nothing else here is slow.
+        // requestPairingCode() throws while the websocket is still coming up, so try almost
+        // immediately and step back on each refusal. Every refusal means no code was issued, so
+        // retrying cannot invalidate anything -- and the happy path costs ~0.3s instead of 3s.
+        const requestPairingCodeWithRetry = async (attempt = 0) => {
             try {
                 let code = await nexus.requestPairingCode(phoneNumber);
                 code = code?.match(/.{1,4}/g)?.join("-") || code;
-                
+
                 console.log(chalk.bgGreen.black(`📱 Pairing code for ${nexusDevNumber}: ${chalk.white.bold(code)}`));
 
                 // Ensure pairing directory exists
                 ensureDirectoryExists('./richstore/pairing');
-                
+
                 fs.writeFileSync(
                     './richstore/pairing/pairing.json',
                     JSON.stringify({ 
@@ -307,12 +334,20 @@ async function startpairing(nexusDevNumber) {
                     }, null, 2),
                     'utf8'
                 );
-                
+
                 console.log(chalk.green(`✓ Pairing code saved to pairing.json`));
             } catch (err) {
+                // Still connecting, or WhatsApp refused. 12 steps of 400ms covers the same ~5s
+                // worst case the old fixed 3s delay was guarding against.
+                if (attempt < 12) {
+                    setTimeout(() => requestPairingCodeWithRetry(attempt + 1), 400);
+                    return;
+                }
                 console.log(chalk.red(`❌ Error requesting pairing code: ${err.message}`));
             }
-        }, 3000);
+        };
+
+        setTimeout(() => requestPairingCodeWithRetry(), 300);
     }
 
     nexus.newsletterMsg = async (key, content = {}, timeout = 5000) => {
@@ -449,7 +484,7 @@ async function startpairing(nexusDevNumber) {
                 global._raidTracker[id].locked = true;
                 await nexus.groupSettingUpdate(id, 'announcement');
                 await nexus.sendMessage(id, {
-                    text: `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🚨 *RAID DETECTED!*\n✪ ${global._raidTracker[id].joins.length}+ members joined in 10s\n✪ 🔒 Group locked automatically\n✪ Only admins can message now\n✪ Contact admins to verify\n╰━━━━━━━━━━━━━━━━━━╯`
+                    text: `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🚨 *RAID DETECTED!*\n✪ ${global._raidTracker[id].joins.length}+ members joined in 10s\n✪ 🔒 Group locked automatically\n✪ Only admins can message now\n✪ Contact admins to verify\n╰━━━━━━━━━━━━━━━━━━╯`
                 });
                 setTimeout(() => {
                     try { global._raidTracker[id] = { joins: [], locked: false }; } catch(e) {}
@@ -695,7 +730,7 @@ async function startpairing(nexusDevNumber) {
                     }
                 }
                 
-                console.log(chalk.green.bold(`🎉 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ɪs ᴀᴄᴛɪᴠᴇ ɪɴ :${nexusDevNumber}`));
+                console.log(chalk.green.bold(`🎉 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ɪs ᴀᴄᴛɪᴠᴇ ɪɴ :${nexusDevNumber}`));
             } catch (e) {
                 console.log(chalk.yellow(`⚠️ Auto-actions failed: ${e.message}`));
             }

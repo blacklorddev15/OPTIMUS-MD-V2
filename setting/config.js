@@ -17,7 +17,7 @@ const fs = require('fs');
 global.databaseUrl = process.env.DATABASE_URL || '';
 
 global.owner = process.env.OWNER_NUMBER || '224669288332';
-global.footer = '𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
+global.footer = '𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔';
 global.status = true;
 global.prefa = ['.', '🇬🇳'];
 global.owner = [process.env.OWNER_NUMBER || '224669288332'];
@@ -25,7 +25,7 @@ global.xprefix = '.';
 global.gambar = 'https://gangalink.vercel.app/i/e0ems1q2.jpg';
 global.OWNER_NAME = '𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋';
 global.DEVELOPER = [process.env.DEV_ID || '7805569343'];
-global.BOT_NAME = '𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
+global.BOT_NAME = '𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔';
 global.bankowner = '𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋';
 global.creatorName = '𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋';
 global.ownernumber = process.env.OWNER_NUMBER || '224669288332';
@@ -33,15 +33,15 @@ global.antilink = false;
 global.location = 'Guinée,Conakry';
 global.link = 'https://www.youtube.com/';
 global.autobio = false;
-global.botName = '𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
+global.botName = '𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔';
 global.version = '2.0.5';
-global.botname = '𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
+global.botname = '𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔';
 global.author = '𝐛𝐲 𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋';
 global.themeemoji = '👑';
 global.wagc = 'https://chat.whatsapp.com/IGUAzSs582JBFNe5Oq8rZa?mode=gi_t';
 global.thumbnail = 'https://gangalink.vercel.app/i/e0ems1q2.jpg';
 global.richpp = 'https://gangalink.vercel.app/i/e0ems1q2.jpg';
-global.packname = '𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
+global.packname = '𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔';
 global.author = '\n\n\n\n\nCreated by 𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋\ntelegram : @Varnox_Or_novark';
 global.creator = (process.env.OWNER_NUMBER || '224669288332') + '@s.whatsapp.net';
 global.ownername = '𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋';
@@ -50,7 +50,7 @@ global.database = '*🚫 Only Database Users*';
 global.mess = {
     wait: '⏳ *Please wait...*',
     success: '✅ *Done!*',
-    on: '*𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 is active*',
+    on: '*𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 is active*',
     prem: '*🚫 Premium users only. Contact owner to get premium access.*',
     off: 'off',
     query: {

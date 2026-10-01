@@ -32,8 +32,8 @@ const initializeBot = async () => {
 
     rl.stdoutMuted = true;
     console.log(chalk.bold.yellow('┌─────────────────────────────────┐'));
-    console.log(chalk.bold.yellow('│   𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 v2.0.5          │'));
-    console.log(chalk.bold.yellow('│   Enter password to start bot   │'));
+    console.log(chalk.bold.yellow('│   𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 v2.0.5       │'));
+    console.log(chalk.bold.yellow('│   Enter password to start bot │'));
     console.log(chalk.bold.yellow('└─────────────────────────────────┘'));
 
     rl.question(chalk.green('🔑 Password: '), function (input) {
@@ -41,7 +41,7 @@ const initializeBot = async () => {
         console.log(chalk.red('\n❌ Incorrect password. Exiting...'));
         process.exit(1);
       }
-      console.log(chalk.green('\n✅ Password correct. Booting 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃...'));
+      console.log(chalk.green('\n✅ Password correct. Booting 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔...'));
       setAuthenticated(true);
       rl.close();
       launchBot();
@@ -71,13 +71,13 @@ function setAuthenticated(value) {
 function launchBot() {
   console.clear();
   console.log(chalk.bold.cyan('╔══════════════════════════════════════╗'));
-  console.log(chalk.bold.cyan('║   𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ɪs ʟᴀᴜɴᴄʜɪɴɢ...       ║'));
+  console.log(chalk.bold.cyan('║   𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ɪs ʟᴀᴜɴᴄʜɪɴɢ...   ║'));
   console.log(chalk.bold.cyan('╚══════════════════════════════════════╝'));
 
   require('./bot');
   require('./server');
 
-  console.log(chalk.bold.green('✅ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ɪs ᴄᴏɴɴᴇᴄᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ!'));
+  console.log(chalk.bold.green('✅ 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ɪs ᴄᴏɴɴᴇᴄᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ!'));
 
   const ignoredErrors = [
     'Socket connection timeout',

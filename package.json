@@ -1,7 +1,7 @@
 {
   "name": "optimus-xmd",
   "version": "2.0.5",
-  "description": "OPTIMUS-XMD — WhatsApp multi-session bot with Telegram pairing interface",
+  "description": "VARNOX X ULTRA — WhatsApp multi-session bot with Telegram pairing interface",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

@@ -153,7 +153,7 @@ const reply = async (text) => rich.sendMessage(m.chat, {
             contextInfo: {
                 mentionedJid: [sender],
                 externalAdReply: {
-                    title: "𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃",
+                    title: "𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔",
                     body: pushname,
                     mediaUrl: "https://gangalink.vercel.app/i/e0ems1q2.jpg",
                     sourceUrl: "https://whatsapp.com/channel/0029Vb7jG2KEawdwHsZiEm1E",
@@ -183,16 +183,16 @@ if (!rich.public) {
 if (!isCreator) return
 }
 const example = (teks) => {
-return `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ᴜsᴀɢᴇ : *${prefix+command}* ${teks}`
+return `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ ᴜsᴀɢᴇ : *${prefix+command}* ${teks}`
 }
 
 let antilinkStatus = {};
 if (!global.banned) global.banned = {} // stores banned users JIDs
 if (getSetting(m.sender, "autobio", true)) {
-    rich.updateProfileStatus(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ɪs ᴄᴏɴɴᴇᴄᴛᴇᴅ ᴀɴᴅ ᴡᴇʟʟ ʀᴜɴɴɪɴɢ`).catch(_ => _)
+    rich.updateProfileStatus(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ɪs ᴄᴏɴɴᴇᴄᴛᴇᴅ ᴀɴᴅ ᴡᴇʟʟ ʀᴜɴɴɪɴɢ`).catch(_ => _)
 }
 if (isCmd)  {
-    console.log(chalk.black(chalk.bgWhite('[𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(body || m.mtype)) + '\n✪' + chalk.magenta('=> From'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=>In'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
+    console.log(chalk.black(chalk.bgWhite('[𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(body || m.mtype)) + '\n✪' + chalk.magenta('=> From'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=>In'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
 }
 
 if (getSetting(m.chat, "autoReact", false)) {
@@ -240,7 +240,7 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
     let linkRegex = /(https?:\/\/[^\s]+)/gi;
     if (linkRegex.test(m.text)) {
         if (isAdmins || isCreator) return;
-        await rich.sendMessage(m.chat, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *ʟɪɴᴋ ᴅᴇᴛᴇᴄᴛᴇᴅ!* @${m.sender.split("@")[0]} ʟɪɴᴋ ᴀʀᴇ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ.`, mentions: [m.sender] }, { quoted: m });
+        await rich.sendMessage(m.chat, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *ʟɪɴᴋ ᴅᴇᴛᴇᴄᴛᴇᴅ!* @${m.sender.split("@")[0]} ʟɪɴᴋ ᴀʀᴇ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ.`, mentions: [m.sender] }, { quoted: m });
         try {
             await rich.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.key.id, participant: m.key.participant } });
         } catch (e) {
@@ -252,7 +252,7 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
 if (getSetting(m.sender, "autoViewStatus", false) && m.key.remoteJid === "status@broadcast") {
     try {
         await rich.readMessages([m.key]);
-        console.log(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Viewed status from: ${m.key.participant}`);
+        console.log(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Viewed status from: ${m.key.participant}`);
     } catch (err) {
         console.log("❌ Error viewing status:", err);
     }
@@ -281,12 +281,12 @@ if (getSetting(m.sender, "autoread", false)) {
 }
 
 if (getSetting(m.sender, "banned", false)) {
-    await rich.sendMessage(m.chat, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ʏᴏᴜ ᴀʀᴇ ғʀᴏᴍ ᴜsɪɴɢ ᴍᴇ, @${m.sender.split('@')[0]}`, mentions: [m.sender] }, { quoted: m })
+    await rich.sendMessage(m.chat, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ ʏᴏᴜ ᴀʀᴇ ғʀᴏᴍ ᴜsɪɴɢ ᴍᴇ, @${m.sender.split('@')[0]}`, mentions: [m.sender] }, { quoted: m })
     return
 }
 
 if (getSetting(m.chat, "feature.autoreply", false)) {
-   const autoReplyList = { "ʜᴇʏ": "ᴅᴀʀʟɪɴɢ", "ᴄᴀɴ ɪ ʜᴇʟᴘ ʏᴏᴜ": "ɪ ʜᴏᴘᴇ ʏᴏᴜ 𝚊𝚛𝚎 ғɪɴᴇ", "𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ɪs ʜᴇʀᴇ": "ᴅᴇᴠ ʙʏ ᴠᴀʀɴᴏx✦ᴘʀɪᴍᴇ" }
+   const autoReplyList = { "ʜᴇʏ": "ᴅᴀʀʟɪɴɢ", "ᴄᴀɴ ɪ ʜᴇʟᴘ ʏᴏᴜ": "ɪ ʜᴏᴘᴇ ʏᴏᴜ 𝚊𝚛𝚎 ғɪɴᴇ", "𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ɪs ʜᴇʀᴇ": "ᴅᴇᴠ ʙʏ ᴠᴀʀɴᴏx✦ᴘʀɪᴍᴇ" }
    if (autoReplyList[m.text?.toLowerCase()]) {
       await rich.sendMessage(m.chat, { text: autoReplyList[m.text.toLowerCase()] }, { quoted: m })
    }
@@ -306,7 +306,7 @@ if (getSetting(m.chat, "feature.antispam", false) && m.isGroup) {
                 // Kick the user from the group
                 await rich.groupParticipantsUpdate(m.chat, [m.sender], "remove");
                 await rich.sendMessage(m.chat, { 
-                    text: ` 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪@${m.sender.split('@')[0]} ʜᴀs ʙᴇᴇɴ ᴋɪᴄᴋᴇᴅ ғᴏʀ sᴘᴀᴍᴍɪɴɢ!`, 
+                    text: ` 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪@${m.sender.split('@')[0]} ʜᴀs ʙᴇᴇɴ ᴋɪᴄᴋᴇᴅ ғᴏʀ sᴘᴀᴍᴍɪɴɢ!`, 
                     mentions: [m.sender] 
                 });
             } catch (err) {
@@ -323,7 +323,7 @@ if (getSetting(m.chat, "feature.antispam", false) && m.isGroup) {
 if (getSetting(m.chat, "feature.antibadword", false)) {
    const badWords = ["fuck", "bitch", "sex", "nigga","bastard","fool","mumu","idiot"]
    if (badWords.some(word => m.text?.toLowerCase().includes(word))) {
-      await rich.sendMessage(m.chat, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ @${m.sender.split('@')[0]} ᴡᴀᴛᴄʜ ʏᴏᴜʀ ʟᴀɴɢᴜᴀɢᴇ`, mentions: [m.sender] })
+      await rich.sendMessage(m.chat, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ @${m.sender.split('@')[0]} ᴡᴀᴛᴄʜ ʏᴏᴜʀ ʟᴀɴɢᴜᴀɢᴇ`, mentions: [m.sender] })
       await rich.sendMessage(m.chat, { delete: m.key })
    }
 }
@@ -332,7 +332,7 @@ if (getSetting(m.chat, "feature.antibot", false)) {
    let botPrefixes = ['.', '!', '/', '£']
    if (botPrefixes.includes(m.text?.trim()[0])) {
       if (m.sender !== (global.owner[0] || '224669288332') + "@s.whatsapp.net") {
-         await rich.sendMessage(m.chat, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ʙᴏᴛ ᴍᴏɴɪᴛᴏʀ ɪs ᴀᴄᴛɪғ ! @${m.sender.split('@')[0]} ʏᴏᴜʀ ʙᴏᴛ ɪs ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ.`, mentions: [m.sender] })
+         await rich.sendMessage(m.chat, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ ʙᴏᴛ ᴍᴏɴɪᴛᴏʀ ɪs ᴀᴄᴛɪғ ! @${m.sender.split('@')[0]} ʏᴏᴜʀ ʙᴏᴛ ɪs ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ.`, mentions: [m.sender] })
          await rich.sendMessage(m.chat, { delete: m.key })
       }
    }
@@ -357,108 +357,125 @@ case 'buddha': {
     // Randomly select an image for the menu
     const richImageUrl = menuImages[Math.floor(Math.random() * menuImages.length)];
 
-    // Command list, generated from this file's own case labels rather than typed by hand.
-    // The template this replaces came from another bot: of its 98 entries, 24 were commands that
-    // do not exist here (ban, unban, gx1-gx12, sel, let, logomarker, lag3dtext, antiake, antilove,
-    // antiprivate, antistick) and it left out 203 that do. Generated data cannot drift like that.
+    // ── The menu ─────────────────────────────────────────────────────────────
+    // Layout, section names and footer are the requested design. The entries are not taken from
+    // that template: it lists commands from a different bot, most of which do not exist here, and
+    // a menu that advertises a command which does nothing is worse than a shorter one. These come
+    // from this file's own case labels, so every line works and nothing is missing.
     const menuSections = [
-        ['🛠 𝗢𝗪𝗡𝗘𝗥', [
-        'OFF', 'ON', 'alive', 'allmenu', 'autobio', 'autoreact', 'autoread', 'autorecording',
-        'autorecordtype', 'autotyping', 'autoviewstatus', 'bot', 'buddha', 'commands', 'connect',
-        'dev', 'fullmenu', 'getpp', 'iplookup', 'jid', 'menu', 'myip', 'owner', 'pair', 'ping',
-        'private', 'public', 'repo', 'runtime', 'self', 'setpp'
+        ['SETTINGS', [
+                'alive', 'allmenu', 'antidelete', 'autobio', 'autoreact', 'autoread',
+                'autorecording', 'autorecordtype', 'autotyping', 'autoviewstatus', 'block',
+                'blocked', 'bot', 'commands', 'connect', 'del', 'delete', 'dev', 'dlt', 'fullmenu',
+                'getpp', 'idch', 'iplookup', 'jid', 'menu', 'myip', 'owner', 'pair', 'ping',
+                'private', 'public', 'react-ch', 'reactch', 'repo', 'runtime', 'self', 'setpp',
+                'unblock', 'unblocked'
         ]],
-        ['📦 𝗚𝗘𝗡𝗘𝗥𝗔𝗟', [
-        'advancedglow', 'advice', 'ascii', 'book', 'calculate', 'coffee', 'coin', 'compliment',
-        'currency', 'dadjoke', 'define', 'dictionary', 'fact', 'fat', 'funfact', 'gamefact',
-        'genpass', 'h', 'horoscope', 'idch', 'inspire', 'joke', 'l', 'math', 'mathfact', 'meme',
-        'movie', 'moviequote', 'p', 'pdftotext', 'prog', 'progquote', 'qrcode', 'quote',
-        'quotememe', 'reactch', 'readqr', 'recipe', 'remind', 'reverse', 'say', 'sciencefact',
-        'shorturl', 'time', 'tourl', 'track', 'trackuser', 'triviafact', 'urban', 'url', 'weather',
-        'wiki'
+        ['GROUPS', [
+                'add', 'admin', 'antibadword', 'antibot', 'anticmd', 'antiinsult', 'antilink',
+                'antiporno', 'antiprive', 'antipseudo', 'antipurgeur', 'antiraid', 'antireact',
+                'antispam', 'antisticker', 'antitag', 'closetime', 'creategc', 'creategroup',
+                'demote', 'grouplink', 'hidetag', 'kick', 'kickadmins', 'kickall', 'left',
+                'listadmin', 'listonline', 'mute', 'opentime', 'promote', 'resetlink', 'tag',
+                'tagadmin', 'tagall', 'totag', 'unmute', 'welcome'
         ]],
-        ['🎮 𝗚𝗔𝗠𝗘', [
-        '8ball', 'coinbattle', 'dare', 'dice', 'emojiquiz', 'findnumber', 'guess', 'hangman',
-        'numbattle', 'numberbattle', 'rps', 'rpsls', 'searchnumber', 'snumber', 'tictactoe',
-        'trivia', 'truth'
+        ['AI', [
+                'ai', 'gpt4', 'openai', 'otage', 'xxai', 'ᴏᴘᴛɪᴍᴜs'
         ]],
-        ['🎭 𝗔𝗡𝗜𝗠𝗘', [
-        'animebite', 'animeblush', 'animebonk', 'animebully', 'animecringe', 'animedance',
-        'animeglomp', 'animehappy', 'animehighfive', 'animekill', 'animelick', 'animepoke',
-        'animesearch', 'animesmile', 'animesmug', 'animewave', 'animewink', 'animewlp',
-        'animeyeet', 'awoo', 'bird', 'bite', 'blush', 'bonk', 'bully', 'cat', 'cringe', 'cry',
-        'cuddle', 'dance', 'dog', 'fox', 'glomp', 'handhold', 'happy', 'highfive', 'hug', 'kill',
-        'kiss', 'koala', 'lick', 'nom', 'panda', 'pat', 'poke', 'rwaifu', 'shinobu', 'slap',
-        'smile', 'smug', 'squirrel', 'waifu', 'wave', 'wink', 'yeet'
+        ['ANIME', [
+                'animebite', 'animeblush', 'animebonk', 'animebully', 'animecringe', 'animedance',
+                'animeglomp', 'animehappy', 'animehighfive', 'animekill', 'animelick', 'animepoke',
+                'animesearch', 'animesmile', 'animesmug', 'animewave', 'animewink', 'animewlp',
+                'animeyeet', 'awoo', 'bird', 'bite', 'blush', 'bonk', 'bully', 'cat', 'cringe',
+                'cry', 'cuddle', 'dance', 'dog', 'fox', 'glomp', 'handhold', 'happy', 'highfive',
+                'hug', 'kill', 'kiss', 'koala', 'lick', 'nom', 'panda', 'pat', 'poke', 'rwaifu',
+                'shinobu', 'slap', 'smile', 'smug', 'squirrel', 'waifu', 'wave', 'wink', 'yeet'
         ]],
-        ['🖼 𝗚𝗙𝗫 / 𝗧𝗘𝗫𝗧', [
-        'blackpinklogo', 'blackpinkstyle', 'cartoonstyle', 'deletingtext', 'effectclouds',
-        'flag3dtext', 'flagtext', 'freecreate', 'galaxystyle', 'galaxywallpaper', 'gfx', 'gfx10',
-        'gfx11', 'gfx12', 'gfx2', 'gfx3', 'gfx4', 'gfx5', 'gfx6', 'gfx7', 'gfx8', 'gfx9',
-        'glitchtext', 'glowingtext', 'gradienttext', 'lighteffects', 'logomaker', 'luxurygold',
-        'makingneon', 'multicoloredneon', 'neonglitch', 'papercutstyle', 'pixelglitch',
-        'royaltext', 'sandsummer', 'style1917', 'summerbeach', 'typographytext', 'underwatertext',
-        'watercolortext', 'writetext'
+        ['IMG MAKER', [
+                'advancedglow', 'blackpinklogo', 'blackpinkstyle', 'cartoonstyle', 'deletingtext',
+                'effectclouds', 'flag3dtext', 'flagtext', 'freecreate', 'galaxystyle',
+                'galaxywallpaper', 'gfx', 'gfx10', 'gfx11', 'gfx12', 'gfx2', 'gfx3', 'gfx4',
+                'gfx5', 'gfx6', 'gfx7', 'gfx8', 'gfx9', 'glitchtext', 'glowingtext',
+                'gradienttext', 'lighteffects', 'logomaker', 'luxurygold', 'makingneon',
+                'multicoloredneon', 'neonglitch', 'papercutstyle', 'pixelglitch', 'royaltext',
+                'sandsummer', 'style1917', 'summerbeach', 'typographytext', 'underwatertext',
+                'watercolortext', 'writetext'
         ]],
-        ['🎵 𝗔𝗨𝗗𝗜𝗢', [
-        'bass', 'blown', 'deep', 'earrape', 'fast', 'nightcore', 'paptt', 'robot', 'slow',
-        'smooth'
+        ['CONVERT', [
+                'ascii', 'bass', 'blown', 'deep', 'earrape', 'fast', 'nightcore', 'paptt',
+                'pdftotext', 'qc', 'qrcode', 'readqr', 'robot', 'shorturl', 'slow', 'smooth',
+                'toimg', 'tourl', 'url', 'vv', 'vv2'
         ]],
-        ['📥 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗', [
-        'apk', 'apkdl', 'play', 'play2', 'tiktok', 'tomp3', 'tomp4', 'tt', 'yts', 'ytsearch'
+        ['FUN', [
+                '8ball', 'advice', 'coffee', 'coin', 'coinbattle', 'compliment', 'dadjoke', 'dare',
+                'dice', 'emojiquiz', 'fact', 'fat', 'findnumber', 'funfact', 'gamefact', 'guess',
+                'hangman', 'horoscope', 'inspire', 'joke', 'mathfact', 'meme', 'numbattle',
+                'numberbattle', 'prog', 'progquote', 'quote', 'quotememe', 'recipe',
+                'recipe-ingredient', 'remind', 'rps', 'rpsls', 'sciencefact', 'searchnumber',
+                'snumber', 'tictactoe', 'trivia', 'triviafact', 'truth'
         ]],
-        ['✨ 𝗖𝗢𝗡𝗩𝗘𝗥𝗦𝗜𝗢𝗡', [
-        'qc', 'toimg', 'vv', 'vv2'
+        ['DOWNLOADS', [
+                'apk', 'apkdl', 'play', 'play2', 'tiktok', 'tomp3', 'tomp4', 'tt', 'yts',
+                'ytsearch'
         ]],
-        ['🤖 𝗔𝗜', [
-        'ai', 'gpt4', 'openai', 'otage', 'xxai'
-        ]],
-        ['⚠️ 𝗔𝗡𝗧𝗜', [
-        'antibadword', 'antibot', 'anticmd', 'antidelete', 'antiinsult', 'antilink', 'antiporno',
-        'antiprive', 'antipseudo', 'antipurgeur', 'antiraid', 'antireact', 'antispam',
-        'antisticker', 'antitag'
-        ]],
-        ['📭 𝗚𝗥𝗢𝗨𝗣', [
-        'add', 'admin', 'block', 'blocked', 'closetime', 'creategc', 'creategroup', 'del',
-        'delete', 'demote', 'dlt', 'grouplink', 'hidetag', 'kick', 'kickadmins', 'kickall', 'left',
-        'listadmin', 'listonline', 'mute', 'opentime', 'promote', 'resetlink', 'tag', 'tagadmin',
-        'tagall', 'totag', 'unblock', 'unblocked', 'unmute', 'welcome'
+        ['GENERAL', [
+                'book', 'buddha', 'calculate', 'currency', 'define', 'dictionary', 'genpass', 'h',
+                'l', 'math', 'movie', 'moviequote', 'p', 'reverse', 'say', 'time', 'track',
+                'trackuser', 'urban', 'weather', 'wiki'
         ]],
     ];
 
-    const smallCaps = (name) => name.replace(/[a-z]/g, (c) => ({
-        a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ',
-        l: 'ʟ', m: 'ᴍ', n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ', s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ',
-        w: 'ᴡ', x: 'x', y: 'ʏ', z: 'ᴢ'
-    }[c] || c));
+    const menuAlias = { 'ᴏᴘᴛɪᴍᴜs': 'Optimus' };
+    const capitalise = (name) => {
+        const display = menuAlias[name] || name;
+        return display.charAt(0).toUpperCase() + display.slice(1);
+    };
+
+    const startedAt = process.hrtime.bigint();
+    const rss = process.memoryUsage().rss;
+    const usedMb = (rss / 1024 / 1024).toFixed(1);
+    const totalGb = (os.totalmem() / 1024 / 1024 / 1024).toFixed(2);
+    const ramPercent = Math.min(100, Math.round((rss / os.totalmem()) * 100));
+    const bar = '█'.repeat(Math.round(ramPercent / 10)) + '░'.repeat(10 - Math.round(ramPercent / 10));
+    const uptimeSeconds = Math.floor(process.uptime());
+    const uptimeText = `${Math.floor(uptimeSeconds / 3600)}h ${Math.floor((uptimeSeconds % 3600) / 60)}m ${uptimeSeconds % 60}s`;
+    const platformName = { linux: 'Linux', darwin: 'macOS', win32: 'Windows' }[process.platform] || process.platform;
+    const platformIcon = { linux: '🐧', darwin: '🍎', win32: '🪟' }[process.platform] || '💻';
 
     let menuList = '';
-    let menuCount = 0;
-    for (const [title, names] of menuSections) {
-        menuList += `\n┃✪│❍ 〔${title} 〕\n`;
+    let toolCount = 0;
+    for (const [section, names] of menuSections) {
+        menuList += `> ╭═━⪩ 〖  ${section}  〗═══•━•⩵꙰ཱི࿐\n`;
         for (const name of names) {
-            menuList += `┃✪│❍${smallCaps(name)}\n`;
-            menuCount += 1;
+            menuList += `> │❍ ${capitalise(name)}\n`;
+            toolCount += 1;
         }
+        menuList += '> ╰━━━━━━━━━━━━━━━━━━•⩵꙰ཱི࿐\n\n';
     }
 
-    const menuText = `
-╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕
-┃✪╭━━━━━━━━━━━━━━━━━
-┃✪│👤 ᴜsᴇʀ :❯ ${m.pushName}
-┃✪│🔆 ᴘʀᴇғɪx :❯ ${prefix}
-┃✪│👑 ᴏᴡɴᴇʀ :❯ 𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵
-┃✪│⏰️ ᴛɪᴍᴇ :❯ ${new Date().toLocaleTimeString()}
-┃✪│🌐 ᴍᴏᴅᴇ :❯ ${rich.public ? 'public' : 'Self'}
-┃✪│♻️ ᴠᴇʀsɪᴏɴ :❯ 2.0.5
-┃✪│📦 ᴛᴏᴛᴀʟ :❯ ${menuCount}
-╰━━━━━━━━━━━━━━━━━≽
-${readMore}
-╭━━━━━━━━━━━━━━━━━≽
-${menuList}
-╰━━━━━━━━━━━━━━━━━≽
-ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃
-`;
+    const elapsed = (Number(process.hrtime.bigint() - startedAt) / 1e6).toFixed(2);
+
+    const menuText = `•━═ 〘  _*~VARNOX X ULTRA~*_   〙═━•
+
+> ╭═━⪩ 〘 𝑺𝒀𝑺𝑻𝑬𝑴 𝑺𝑻𝑨𝑻𝑼𝑺 〙•━•⩵꙰ཱི࿐
+> │⫹⫺ 𝗖𝗢𝗥𝗘: _*~𝐗 𝐔𝐋𝐓𝐑𝐀~*_ 🟢
+> │⫹⫺ 𝗕𝗨𝗜𝗟𝗗 𝗜𝗗: v2.0.5
+> │⫹⫺ 𝗢𝗪𝗡𝗘𝗥: ${global.OWNER_NAME || global.ownername || 'VARNOX'}
+> │⫹⫺ 𝗢𝗣𝗘𝗥𝗔𝗧𝗜𝗢𝗡: ${rich.public ? '🌐 Public' : '🔒 Private'}
+> │⫹⫺ 𝗨𝗣𝗧𝗜𝗠𝗘: ⏱️ ${uptimeText}
+> │⫹⫺ 𝗦𝗣𝗘𝗘𝗗: ${elapsed} ms
+> │⫹⫺ 𝗧𝗢𝗢𝗟𝗦𝗘𝗧: ${toolCount}
+> │⫹⫺ 𝗤𝗨𝗜𝗖𝗞 𝗞𝗘𝗬: ${prefix}
+> │⫹⫺ 𝗡𝗘𝗧𝗪𝗢𝗥𝗞: ${platformIcon} ${platformName}
+> │⫹⫺ 𝗠𝗘𝗠𝗢𝗥𝗬: ${usedMb} MB of ${totalGb} GB
+> │⫹⫺ 𝗥𝗔𝗠: [${bar}] ${ramPercent}%
+> ╰━━━━━━━━━━━━━━━━━━•⩵꙰ཱི࿐
+
+> •━══〘 𝑪𝑶𝑴𝑴𝑨𝑵𝑫 𝑪𝑬𝑵𝑻𝑹𝑬 〙•━•⩵꙰ཱི࿐
+
+${menuList}> 💡 ᴜꜱᴇ *${prefix}menu* ᴛᴏ ɢᴏ ʙᴀᴄᴋ ᴛᴏ ᴛʜᴇ ᴄᴀᴛᴇɢᴏʀɪᴇꜱ.
+
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴠᴀʀɴᴏx x ᴜʟᴛʀᴀ`;;;;;
 
     const fakeSystem = {
         key: {
@@ -468,7 +485,7 @@ ${menuList}
             participant: "0@s.whatsapp.net"
         },
         message: {
-            conversation: "𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃"
+            conversation: "𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔"
         }
     };
 
@@ -502,12 +519,12 @@ break;
 case 'welcome': {
     if (args[0] === 'on') {
       setSetting(m.chat, "welcome", true);
-      reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪✅ ᴡᴇʟᴄᴏᴍᴇ ᴍᴇssᴀɢᴇs ʜᴀᴠᴇ ʙᴇᴇɴ *ᴇɴᴀʙʟᴇᴅ* ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ');
+      reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪✅ ᴡᴇʟᴄᴏᴍᴇ ᴍᴇssᴀɢᴇs ʜᴀᴠᴇ ʙᴇᴇɴ *ᴇɴᴀʙʟᴇᴅ* ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ');
    } else if (args[0] === 'off') {
       setSetting(m.chat, "welcome", false);
-      reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪🚫 ᴡᴇʟᴄᴏᴍᴇ ᴍᴇssᴀɢᴇs ʜᴀᴠᴇ ʙᴇᴇɴ *ᴅɪsᴀʙʟᴇᴅ* ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ');
+      reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪🚫 ᴡᴇʟᴄᴏᴍᴇ ᴍᴇssᴀɢᴇs ʜᴀᴠᴇ ʙᴇᴇɴ *ᴅɪsᴀʙʟᴇᴅ* ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ');
    } else {
-      reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ᴜsᴀɢᴇ: welcome on/off');
+      reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ᴜsᴀɢᴇ: welcome on/off');
    }
 }
 break;
@@ -662,7 +679,7 @@ case 'owner': {
    const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${ownerName}\nTEL;type=CELL;type=VOICE;waid=${ownerNum}:+${ownerNum}\nEND:VCARD`;
    await rich.sendMessage(m.chat, {
        image: { url: ownerPhoto },
-       caption: `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 👑 *ᴏᴡɴᴇʀ*\n✪ 📛 ɴᴀᴍᴇ: ${ownerName}\n✪ 📞 ɴᴜᴍʙᴇʀ: +${ownerNum}\n╰━━━━━━━━━━━━━━━━━━╯`,
+       caption: `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 👑 *ᴏᴡɴᴇʀ*\n✪ 📛 ɴᴀᴍᴇ: ${ownerName}\n✪ 📞 ɴᴜᴍʙᴇʀ: +${ownerNum}\n╰━━━━━━━━━━━━━━━━━━╯`,
    }, { quoted: m });
    await rich.sendMessage(m.chat, {
        contacts: { displayName: ownerName, contacts: [{ vcard }] }
@@ -673,7 +690,7 @@ break
 // 🔹 Repo case
 case 'repo': {
    let txt = `  
-    𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ᴜsᴀɢᴇ :
+    𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ᴜsᴀɢᴇ :
 ᴛʏᴘᴇ /pair <224𝚇𝚇𝚇𝚇>
 ✪ ʙᴏᴛ ʟɪɴᴋ
 ɢᴏ ᴀɴᴅ ᴘᴀɪʀ  
@@ -689,7 +706,7 @@ case 'url':
 case 'tourl': {    
 
     let q = m.quoted ? m.quoted : m;
-    if (!q || !q.download) return reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Reply to an Image or Video with command ${prefix + command}`);
+    if (!q || !q.download) return reply(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Reply to an Image or Video with command ${prefix + command}`);
     
     let mime = q.mimetype || '';
     if (!/image\/(png|jpe?g|gif)|video\/mp4/.test(mime)) {
@@ -700,7 +717,7 @@ case 'tourl': {
     try {
         media = await q.download();
     } catch (error) {
-        return reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Failed to download media!');
+        return reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Failed to download media!');
     }
 
     const uploadImage = require('./allfunc/Data6');
@@ -714,7 +731,7 @@ case 'tourl': {
     }
 
     rich.sendMessage(m.chat, {
-        text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Link: ${link}`
+        text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Link: ${link}`
     }, { quoted: m });
 }
 break;
@@ -764,7 +781,7 @@ case 'apkdl': {
     const data = await res.json();
 
     if (!data.status || !data.BK9 || !data.BK9.dllink) {
-      return reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *APK not found.* The package ID might be incorrect or the API failed. Please try a different one.');
+      return reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *APK not found.* The package ID might be incorrect or the API failed. Please try a different one.');
     }
 
     const { name, emperor, dllink, package: packageName } = data.BK9;
@@ -772,7 +789,7 @@ case 'apkdl': {
     await rich.sendMessage(m.chat, {
       image: { url: emperor},
       caption:
-`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n⎔*📦 APK Downloader* 
+`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n⎔*📦 APK Downloader* 
 ✪ *Name:* _${name}_
 ✪ *Package:* _${packageName}_
 ✪ *Download:* [Click Here](${dllink})`
@@ -791,9 +808,9 @@ case 'apkdl': {
 }
 break;
 case 'tomp4': {
-   if (!m.quoted) return reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪🖼️ Reply to a *sticker or gif* with tomp4")
+   if (!m.quoted) return reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪🖼️ Reply to a *sticker or gif* with tomp4")
    let mime = m.quoted.mimetype || ''
-   if (!/webp|gif/.test(mime)) return reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪⚠️ Reply must be a sticker or gif")
+   if (!/webp|gif/.test(mime)) return reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪⚠️ Reply must be a sticker or gif")
 
    try {
       // Download the quoted sticker/gif
@@ -857,7 +874,7 @@ case 'kickadmins': {
         }
     }
 
-    m.reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ᴛʜɪs ᴘʟᴀᴄᴇ ɪs ᴜɴᴅᴇʀ ᴍʏ ᴄᴏɴᴛʀᴏʟ")
+    m.reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ ᴛʜɪs ᴘʟᴀᴄᴇ ɪs ᴜɴᴅᴇʀ ᴍʏ ᴄᴏɴᴛʀᴏʟ")
 }
 break;
 case 'kickall': {
@@ -882,7 +899,7 @@ case 'kickall': {
         await sleep(1500) // delay so WA won’t block
     }
 
-    m.reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ᴛʜᴇʀᴇ ɪs ɴᴏ ʜᴏᴘᴇ...ᴘᴜʀɢᴇ ᴇxᴇᴄᴜᴛᴇᴅ ᴀʟʟ ᴍᴇᴍʙᴇʀs ʜᴀᴠ𝙴 ʙᴇᴇɴ sᴜᴍᴍᴏɴᴇᴅ")
+    m.reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ᴛʜᴇʀᴇ ɪs ɴᴏ ʜᴏᴘᴇ...ᴘᴜʀɢᴇ ᴇxᴇᴄᴜᴛᴇᴅ ᴀʟʟ ᴍᴇᴍʙᴇʀs ʜᴀᴠ𝙴 ʙᴇᴇɴ sᴜᴍᴍᴏɴᴇᴅ")
 }
 break;
 
@@ -904,7 +921,7 @@ global.paptt = [
  "https://telegra.ph/file/267744a1a8c897b1636b9.jpg",
  ]
  let url = paptt[Math.floor(Math.random() * paptt.length)]
- rich.sendFile(m.chat, url, null, '𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n⎔Aww..umm💦,am so horny come ride my pu**y anyhow u want🤤🍑🍆', m)
+ rich.sendFile(m.chat, url, null, '𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n⎔Aww..umm💦,am so horny come ride my pu**y anyhow u want🤤🍑🍆', m)
 }}
 break
 case 'coffee': {
@@ -920,7 +937,7 @@ http.get({
 'path': '/'
 }, function(resp) {
 resp.on('data', function(ip) {
-    reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n⎔Your Ip Address Is: " + ip)
+    reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n⎔Your Ip Address Is: " + ip)
 })
 })
             }
@@ -933,7 +950,7 @@ case "movie": {
         const res = await axios.get(`http://www.omdbapi.com/?t=${encodeURIComponent(text)}&apikey=6372bb60`);
         if (res.data.Response === "False") return m.reply("Movie not found.");
         const data = res.data;
-        const msg = `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪🎬 Title: ${data.Title}
+        const msg = `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪🎬 Title: ${data.Title}
 ✪ Year: ${data.Year}
 ✪ Rated: ${data.Rated}
 ✪ Released: ${data.Released}
@@ -1081,7 +1098,7 @@ case "genpass": {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
     let pass = "";
     for (let i=0;i<length;i++) pass += chars.charAt(Math.floor(Math.random()*chars.length));
-    await rich.sendMessage(m.chat, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪🔑 Generated Password:${pass}` }, { quoted: m });
+    await rich.sendMessage(m.chat, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪🔑 Generated Password:${pass}` }, { quoted: m });
 }
 break;
 case "readqr": {
@@ -1108,7 +1125,7 @@ case "calculate": {
     if (!text) return m.reply("Provide an expression. Example: calculate 12+25*3");
     try {
         const result = mathjs.evaluate(text);
-        await rich.sendMessage(m.chat, { text: `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🧮 *Calculate*\n✪ 📥 Input: ${text}\n✪ 📤 Result: *${result}*\n╰━━━━━━━━━━━━━━━━━━╯` }, { quoted: m });
+        await rich.sendMessage(m.chat, { text: `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🧮 *Calculate*\n✪ 📥 Input: ${text}\n✪ 📤 Result: *${result}*\n╰━━━━━━━━━━━━━━━━━━╯` }, { quoted: m });
     } catch {
         m.reply("Invalid expression.");
     }
@@ -1141,11 +1158,11 @@ case "hangman": {
 
     // Start new game
     if (!game) {
-        if (!args[0]) return m.reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪❌ Start game with a word. Example: hangman banana");
+        if (!args[0]) return m.reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪❌ Start game with a word. Example: hangman banana");
         const word = args[0].toLowerCase();
         const display = "_".repeat(word.length).split("");
         hangmanGames[chatId] = { word, display, attempts: 6, guessed: [] };
-        await rich.sendMessage(chatId, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n⎔🕹 Hangman Started!\n${display.join(" ")}\nAttempts left: 6\nVisual:\n${hangmanVisual[0]}\nGuess letters: hangman <letter>` }, { quoted: m });
+        await rich.sendMessage(chatId, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n⎔🕹 Hangman Started!\n${display.join(" ")}\nAttempts left: 6\nVisual:\n${hangmanVisual[0]}\nGuess letters: hangman <letter>` }, { quoted: m });
         return;
     }
 
@@ -1164,7 +1181,7 @@ case "hangman": {
 
     // Check win
     if (!game.display.includes("_")) {
-        await rich.sendMessage(chatId, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪🎉 You guessed the word: ${game.word}` }, { quoted: m });
+        await rich.sendMessage(chatId, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪🎉 You guessed the word: ${game.word}` }, { quoted: m });
         delete hangmanGames[chatId];
         return;
     }
@@ -1253,15 +1270,15 @@ break;
 // ▫️ /writetext - Write on wet glass
 case "writetext": {
     if (args.length < 1) {
-        return rich.sendMessage(from, { text: "𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪❌ Please provide text!\nExample: .writetext Dark Tech " }, { quoted: m });
+        return rich.sendMessage(from, { text: "𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪❌ Please provide text!\nExample: .writetext Dark Tech " }, { quoted: m });
     }
     let text = args.join(" ");
     try {
         let url = `https://apis.prexzyvilla.site/writetext?text=${encodeURIComponent(text)}`;
-        await rich.sendMessage(from, { image: { url }, caption: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪✍️ Write Text Logo Generated for: ${text}` }, { quoted: m });
+        await rich.sendMessage(from, { image: { url }, caption: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪✍️ Write Text Logo Generated for: ${text}` }, { quoted: m });
     } catch (e) {
         console.error(e);
-        await rich.sendMessage(from, { text: "𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪⚠️ Error generating Write Text logo." }, { quoted: m });
+        await rich.sendMessage(from, { text: "𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪⚠️ Error generating Write Text logo." }, { quoted: m });
     }
 }
 break;
@@ -1338,7 +1355,7 @@ case "flagtext": {
     let text = args.join(" ");
     try {
         let url = `https://apis.prexzyvilla.site/flagtext?text=${encodeURIComponent(text)}`;
-        await rich.sendMessage(from, { image: { url }, caption: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Flag enerated for: ${text}` }, { quoted: m });
+        await rich.sendMessage(from, { image: { url }, caption: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Flag enerated for: ${text}` }, { quoted: m });
     } catch (e) {
         console.error(e);
         await rich.sendMessage(from, { text: "⚠️ Error generating Flag Text." }, { quoted: m });
@@ -1754,7 +1771,7 @@ case "emojiquiz": {
         { emoji: "☕", answer: "coffee" }
     ];
     const quiz = quizzes[Math.floor(Math.random() * quizzes.length)];
-    await rich.sendMessage(m.chat, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n⎔🧩 Guess the Emoji:\n${quiz.emoji}\nReply with: emojianswer <your guess>` }, { quoted: m });
+    await rich.sendMessage(m.chat, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n⎔🧩 Guess the Emoji:\n${quiz.emoji}\nReply with: emojianswer <your guess>` }, { quoted: m });
     
     // Store the correct answer for checking
 }
@@ -2041,7 +2058,7 @@ case 'connect':
 case 'bot':
 case 'pair':
 await rich.sendMessage(m.chat, {react: {text: '📲', key: m.key}})  
-  if (!q) return reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴀ ᴠᴀʟɪᴅ ɴᴜᴍʙᴇʀ\n✪ ᴛᴏ sᴇɴᴅ ᴘᴀɪʀɪɴɢ ʀᴇǫᴜᴇsᴛ ᴄᴏᴅᴇ
+  if (!q) return reply(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴀ ᴠᴀʟɪᴅ ɴᴜᴍʙᴇʀ\n✪ ᴛᴏ sᴇɴᴅ ᴘᴀɪʀɪɴɢ ʀᴇǫᴜᴇsᴛ ᴄᴏᴅᴇ
 ✪ *Usage: ${prefix}pair 224xxxxxxxxx*`);
 
   target = text.split("|")[0];
@@ -2049,7 +2066,7 @@ await rich.sendMessage(m.chat, {react: {text: '📲', key: m.key}})
 
   var contactInfo = await rich.onWhatsApp(sjid);
   if (contactInfo.length === 0) {
-    return reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ᴛʜᴇ ɴᴜᴍʙᴇʀ ɪs ɴᴏᴛ ʀᴇɢɪsᴛᴇʀᴇᴅ ᴏɴ ᴡʜᴀᴛsᴀᴘᴘ");
+    return reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ ᴛʜᴇ ɴᴜᴍʙᴇʀ ɪs ɴᴏᴛ ʀᴇɢɪsᴛᴇʀᴇᴅ ᴏɴ ᴡʜᴀᴛsᴀᴘᴘ");
   }
 
   const startpairing = require('./pair.js');
@@ -2060,11 +2077,11 @@ await rich.sendMessage(m.chat, {react: {text: '📲', key: m.key}})
   const cuObj = JSON.parse(cu);
 
   // Send just the code first
-  await rich.sendMessage(from, { text: `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪${cuObj.code}` }, { quoted: m });
+  await rich.sendMessage(from, { text: `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪${cuObj.code}` }, { quoted: m });
 
   // Send the instructions next
   const instructions = `
-✪𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃✪\n\n
+✪𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔✪\n\n
 ✪ ʏᴏᴜʀ ᴄᴏᴅᴇ: ${cuObj.code}
 
 `;
@@ -2171,16 +2188,16 @@ case 'gfx11':
 case 'gfx12': {
   const [text1, text2] = text.split('|').map(v => v.trim());
   if (!text1 || !text2) {
-    return reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n⎔ Example: ${prefix + command} 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋`);
+    return reply(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n⎔ Example: ${prefix + command} 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋`);
   }
 
-  reply(` 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n⎔ *Generating your stylish image...\n✪🔤 Text 1: ${text1}\n✪🔡 Text 2: ${text2}\n✪⏳ Please wait!`);
+  reply(` 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n⎔ *Generating your stylish image...\n✪🔤 Text 1: ${text1}\n✪🔡 Text 2: ${text2}\n✪⏳ Please wait!`);
 
   try {
     const style = command.toUpperCase();
     const apiUrl = `https://api.nexoracle.com/image-creating/${command}?apikey=d0634e61e8789b051e&text1=${encodeURIComponent(text1)}&text2=${encodeURIComponent(text2)}`;
 
-    await sendImage(apiUrl, `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ - ${style} Style\n✪🔤 Text 1: ${text1}\n✪🔡 Text 2: ${text2}`);
+    await sendImage(apiUrl, `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ - ${style} Style\n✪🔤 Text 1: ${text1}\n✪🔡 Text 2: ${text2}`);
   } catch (err) {
     console.error(err);
     reply(`Failed to generate ${command.toUpperCase()} image.`);
@@ -2438,7 +2455,7 @@ break;
     });
 
     await rich.sendMessage(m.chat, {
-      text: `╭━━━━━━━━━━━━━━━━━≽𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n│\n ✪
+      text: `╭━━━━━━━━━━━━━━━━━≽𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n│\n ✪
       ǫsᴛ: ${text}\n ┃ \n ┃ ✪ ᴀɴsᴡᴇʀ:\n ┃ ${data}\n ┃ \n ┃ ✪ ᴅᴏ ʏᴏᴜ ɴᴇᴇᴅ sᴏᴍᴇᴛʜɪɴɢ ᴇʟsᴇ ?
       ╰━━━━━━━━━━━━━━━━━≽`
     }, { quoted: m });
@@ -2454,7 +2471,7 @@ if (!text) return reply("example : link channel")
 if (!text.includes("https://whatsapp.com/channel/0029Vb7jG2KEawdwHsZiEm1E")) return reply("not a valid Link ")
 let result = text.split('https://whatsapp.com/channel/0029Vb7jG2KEawdwHsZiEm1E')[1]
 let res = await rich.newsletterMetadata("invite", result)
-let teks = `   𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃
+let teks = `   𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔
 ✪ *ID :* ${res.id}
 ✪*Name :* ${res.name}
 ✪ *Follower:* ${res.subscribers}
@@ -2484,7 +2501,7 @@ case 'closetime': {
         return reply('*Choose:*\nsecond\nminute\nhour\nday\n\n*Example:*\n10 minute');
     }
 
-    reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪⏳ Close Time ${value} ${unit} starting from now...`);
+    reply(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪⏳ Close Time ${value} ${unit} starting from now...`);
 
     setTimeout(async () => {
         try {
@@ -2501,7 +2518,7 @@ case 'opentime': {
 
     let unit = args[1];
     let value = Number(args[0]);
-    if (!value) return reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *Usage:* opentime <number> <second/minute/hour/day>\n\n✪ *Example:* 5 second');
+    if (!value) return reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *Usage:* opentime <number> <second/minute/hour/day>\n\n✪ *Example:* 5 second');
 
     let timer;
     if (unit === 'second') {
@@ -2548,7 +2565,7 @@ if (!isCreator) return m.reply("Owner only.");
         let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
         let online = [...Object.keys(store.presences[id]), botNumber]
         let liston = 1
-        rich.sendText(m.chat, ' 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ʟɪsᴛ ᴏғ ᴏɴʟɪɴᴇ ᴍᴇᴍʙᴇʀs\n\n' + online.map(v => `✪${liston++} . @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
+        rich.sendText(m.chat, ' 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ ʟɪsᴛ ᴏғ ᴏɴʟɪɴᴇ ᴍᴇᴍʙᴇʀs\n\n' + online.map(v => `✪${liston++} . @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
       }
       break;
 case 'gpt4': case 'openai': case 'xxai': {
@@ -2722,19 +2739,19 @@ if (!qtext) return reply('Where is the text?')
       case 'waifu' :
 
 waifudd = await axios.get(`https://waifu.pics/api/nsfw/waifu`) 
-rich.sendMessage(from, {image: {url:waifudd.data.url},caption:`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Your waifu`}, { quoted:m }).catch(err => {
+rich.sendMessage(from, {image: {url:waifudd.data.url},caption:`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Your waifu`}, { quoted:m }).catch(err => {
  return('Error!')
 })
 break;      
 case 'vv':
 case 'vv2': {
-    if (!m.quoted) return reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪please reply to a view-once image, video, or voice note!');
+    if (!m.quoted) return reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪please reply to a view-once image, video, or voice note!');
 
     try {
         const mediaBuffer = await rich.downloadMediaMessage(m.quoted);
 
         if (!mediaBuffer) {  
-            return reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Please again. image/video or voice Only.');  
+            return reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Please again. image/video or voice Only.');  
         }  
 
         const mediaType = m.quoted.mtype;  
@@ -2742,7 +2759,7 @@ case 'vv2': {
         if (mediaType === 'imageMessage') {  
             await rich.sendMessage(m.chat, {   
                 image: mediaBuffer,   
-                caption: "𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃" 
+                caption: "𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔" 
             }, { quoted: m });
         } else if (mediaType === 'videoMessage') {  
             await rich.sendMessage(m.chat, {   
@@ -2754,7 +2771,7 @@ case 'vv2': {
                 audio: mediaBuffer,   
                 mimetype: 'audio/ogg',  
                 ptt: true,  
-                caption: "𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃"
+                caption: "𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔"
             }, { quoted: m });
         } else {  
             return reply('Only images, videos, or voice notes,Can be accepted.');  
@@ -2767,7 +2784,7 @@ case 'vv2': {
 break;
 
 case 'qc': {
-  if (!text) return reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Use format: *.qc your quote*');
+  if (!text) return reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Use format: *.qc your quote*');
 
   const name = m.pushName || 'User';
   const quote = text.trim();
@@ -2825,7 +2842,7 @@ case 'creategroup': {
     const code = await rich.groupInviteCode(cret.id);
     const link = `https://chat.whatsapp.com/${code}`;
 
-    const teks = `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪「 Group Created 」
+    const teks = `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪「 Group Created 」
 ▸ *Name:* ${cret.subject}
 ▸ *Group ID:* ${cret.id}
 ▸ *Owner:* @${cret.owner.split("@")[0]}
@@ -2884,7 +2901,7 @@ case 'kick': {
 
   let users = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
   await rich.groupParticipantsUpdate(m.chat, [users], 'remove');
-  reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ᴜsᴇʀ ʜᴀs ʙᴇᴇɴ ᴋɪᴄᴋᴇᴅ ᴏᴜᴛ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴘ");
+  reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ᴜsᴇʀ ʜᴀs ʙᴇᴇɴ ᴋɪᴄᴋᴇᴅ ᴏᴜᴛ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴘ");
 }
 break;
 
@@ -2897,7 +2914,7 @@ case 'admin': {
   const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n');
   const owner = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadmin')?.id || m.chat.split`-`[0] + '@s.whatsapp.net';
 
-  let text = `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *Group Admins:*\n✪${listAdmin}`;
+  let text = `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *Group Admins:*\n✪${listAdmin}`;
   rich.sendMessage(m.chat, {
     text,
     mentions: [...groupAdmins.map(v => v.id), owner]
@@ -2947,7 +2964,7 @@ case 'tagall': {
   if (!m.isGroup) return reply(msg.only.group);
 
   const textMessage = args.join(" ") || "No context";
-  let teks = `𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋*\n✪  *${textMessage}*\n\n`;
+  let teks = `𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋*\n✪  *${textMessage}*\n\n`;
 
   const groupMetadata = await rich.groupMetadata(m.chat);
   const participants = groupMetadata.participants;
@@ -3037,13 +3054,13 @@ case 'setpp': {
   if (!quoted || !/image/.test(mime)) return reply(`Reply to an image to set as bot profile picture.`);
   let media = await quoted.download();
   await rich.updateProfilePicture(botNumber, media);
-  reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Profile picture updated.');
+  reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Profile picture updated.');
 }
 break;
 case 'react-ch': 
 case 'reactch': {
        if (!args[0]) {
-        return reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Usage:.reactch https://whatsapp.com/channel/0029Vb7jG2KEawdwHsZiEm1E 🔥🎉");
+        return reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Usage:.reactch https://whatsapp.com/channel/0029Vb7jG2KEawdwHsZiEm1E 🔥🎉");
     }
 
     if (!args[0].startsWith("https://whatsapp.com/channel/0029Vb7jG2KEawdwHsZiEm1E")) {
@@ -3083,7 +3100,7 @@ case 'reactch': {
 break;
 
 case 'runtime': case 'alive': { 
-         reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *ʀᴜɴᴛɪᴍᴇ: ${runtime(process.uptime())}* `); 
+         reply(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *ʀᴜɴᴛɪᴍᴇ: ${runtime(process.uptime())}* `); 
 }
 break
 case 'ping': case 'p': {
@@ -3096,7 +3113,7 @@ case 'ping': case 'p': {
     const _heap = (_mem.heapUsed / 1024 / 1024).toFixed(1);
     const _freeRam = (_osm.freemem() / 1024 / 1024).toFixed(1);
     const _totalRam = (_osm.totalmem() / 1024 / 1024).toFixed(1);
-    reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🏓 *PING RESULT*\n✪ ⚡ *Speed :* ${_pingMs} ms\n✪ ⏱️ *Uptime :* ${runtime(process.uptime())}\n✪ 💾 *RAM Used :* ${_ramUsed} MB\n✪ 🧠 *Heap :* ${_heap} MB\n✪ 🖥️ *Free RAM :* ${_freeRam} / ${_totalRam} MB\n✪ 🌐 *Status :* Online ✅\n╰━━━━━━━━━━━━━━━━━━╯`);
+    reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🏓 *PING RESULT*\n✪ ⚡ *Speed :* ${_pingMs} ms\n✪ ⏱️ *Uptime :* ${runtime(process.uptime())}\n✪ 💾 *RAM Used :* ${_ramUsed} MB\n✪ 🧠 *Heap :* ${_heap} MB\n✪ 🖥️ *Free RAM :* ${_freeRam} / ${_totalRam} MB\n✪ 🌐 *Status :* Online ✅\n╰━━━━━━━━━━━━━━━━━━╯`);
 }
 break;
 
@@ -3106,11 +3123,11 @@ case 'antiraid': {
     const _raidAction = args[0]?.toLowerCase();
     if (!_raidAction || !['on', 'off'].includes(_raidAction)) {
         const _cur = getSetting(m.chat, 'antiraid', false);
-        return reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🛡️ *ANTI RAID*\n✪ Status : *${_cur ? '🟢 ACTIVE' : '🔴 INACTIVE'}*\n✪ Usage : *antiraid on/off*\n✪ Locks group if 5+ members\n✪ join within 10 seconds\n╰━━━━━━━━━━━━━━━━━━╯`);
+        return reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🛡️ *ANTI RAID*\n✪ Status : *${_cur ? '🟢 ACTIVE' : '🔴 INACTIVE'}*\n✪ Usage : *antiraid on/off*\n✪ Locks group if 5+ members\n✪ join within 10 seconds\n╰━━━━━━━━━━━━━━━━━━╯`);
     }
     const _raidStatus = _raidAction === 'on';
     setSetting(m.chat, 'antiraid', _raidStatus);
-    reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🛡️ Anti Raid : *${_raidStatus ? 'ACTIVATED 🟢' : 'DEACTIVATED 🔴'}*\n${_raidStatus ? '✪ Group auto-locks if 5+ join in 10s' : '✪ Raid protection disabled'}\n╰━━━━━━━━━━━━━━━━━━╯`);
+    reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🛡️ Anti Raid : *${_raidStatus ? 'ACTIVATED 🟢' : 'DEACTIVATED 🔴'}*\n${_raidStatus ? '✪ Group auto-locks if 5+ join in 10s' : '✪ Raid protection disabled'}\n╰━━━━━━━━━━━━━━━━━━╯`);
 }
 break;
 
@@ -3120,31 +3137,31 @@ case 'anticmd': {
     const _acAction = args[0]?.toLowerCase();
     if (!_acAction || !['on', 'off'].includes(_acAction)) {
         const _cur = getSetting(m.chat, 'anticmd', false);
-        return reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🚫 *ANTI COMMAND*\n✪ Status : *${_cur ? '🟢 ON' : '🔴 OFF'}*\n✪ Usage : *anticmd on/off*\n✪ Auto-deletes bot commands\n✪ from non-admin members\n╰━━━━━━━━━━━━━━━━━━╯`);
+        return reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🚫 *ANTI COMMAND*\n✪ Status : *${_cur ? '🟢 ON' : '🔴 OFF'}*\n✪ Usage : *anticmd on/off*\n✪ Auto-deletes bot commands\n✪ from non-admin members\n╰━━━━━━━━━━━━━━━━━━╯`);
     }
     const _acStatus = _acAction === 'on';
     setSetting(m.chat, 'anticmd', _acStatus);
-    reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🚫 Anti Command : *${_acStatus ? 'ON 🟢' : 'OFF 🔴'}*\n✪ Non-admin commands : *${_acStatus ? 'will be deleted' : 'allowed'}*\n╰━━━━━━━━━━━━━━━━━━╯`);
+    reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🚫 Anti Command : *${_acStatus ? 'ON 🟢' : 'OFF 🔴'}*\n✪ Non-admin commands : *${_acStatus ? 'will be deleted' : 'allowed'}*\n╰━━━━━━━━━━━━━━━━━━╯`);
 }
 break;
 
 case 'searchnumber': case 'findnumber': case 'snumber': {
     if (!m.isGroup) return reply(global.mess.only.group);
-    if (!text) return reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🔍 *SEARCH NUMBER*\n✪ Usage : *.searchnumber <code>*\n✪ Example : *.searchnumber 224*\n✪ Lists all members with that dial code\n╰━━━━━━━━━━━━━━━━━━╯`);
+    if (!text) return reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🔍 *SEARCH NUMBER*\n✪ Usage : *.searchnumber <code>*\n✪ Example : *.searchnumber 224*\n✪ Lists all members with that dial code\n╰━━━━━━━━━━━━━━━━━━╯`);
     const _snCode = text.replace(/\D/g, '');
     if (!_snCode || _snCode.length < 1 || _snCode.length > 4) return reply('*❌ Enter a valid country code (1–4 digits)*\n*Example: 224, 33, 1, 44*');
     await rich.sendMessage(m.chat, { text: `🔍 *Searching for +${_snCode} numbers...*` }, { quoted: m });
     try {
         const _groupMeta = await rich.groupMetadata(m.chat);
         const _matches = _groupMeta.participants.filter(p => p.id.split('@')[0].startsWith(_snCode));
-        if (!_matches.length) return reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🔍 Code : *+${_snCode}*\n✪ No members found with this code\n╰━━━━━━━━━━━━━━━━━━╯`);
+        if (!_matches.length) return reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🔍 Code : *+${_snCode}*\n✪ No members found with this code\n╰━━━━━━━━━━━━━━━━━━╯`);
         const _list = _matches.map((p, i) => {
             const num = p.id.split('@')[0];
             const role = p.admin === 'superadmin' ? ' 👑' : p.admin === 'admin' ? ' ⭐' : '';
             return `✪ ${i + 1}. @${num}${role}`;
         }).join('\n');
         await rich.sendMessage(m.chat, {
-            text: `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🔍 Dial Code : *+${_snCode}*\n✪ Found : *${_matches.length}* / ${_groupMeta.participants.length} members\n╰━━━━━━━━━━━━━━━━━━╯\n\n${_list}`,
+            text: `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🔍 Dial Code : *+${_snCode}*\n✪ Found : *${_matches.length}* / ${_groupMeta.participants.length} members\n╰━━━━━━━━━━━━━━━━━━╯\n\n${_list}`,
             mentions: _matches.map(p => p.id)
         }, { quoted: m });
     } catch(e) {
@@ -3156,7 +3173,7 @@ break;
 case 'public': {
     setSetting("bot", "mode", "public");
     rich.public = true;
-    m.reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ʜᴀᴠᴇ ʙᴇɪɴɢ ᴄʜᴀɴɢᴇ ᴛᴏ ᴘᴜʙʟɪᴄ*.");
+    m.reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ʜᴀᴠᴇ ʙᴇɪɴɢ ᴄʜᴀɴɢᴇ ᴛᴏ ᴘᴜʙʟɪᴄ*.");
 }
 break;
 
@@ -3164,7 +3181,7 @@ case 'private':
 case 'self': {
     setSetting("bot", "mode", "self");
     rich.public = false;
-    m.reply("𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ʜᴀᴠᴇ ᴄʜᴀɴɢᴇ ᴛᴏ ᴘʀɪᴠᴀᴛᴇ*.");
+    m.reply("𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ʜᴀᴠᴇ ᴄʜᴀɴɢᴇ ᴛᴏ ᴘʀɪᴠᴀᴛᴇ*.");
 }
 break;
 case 'otage':
@@ -3193,7 +3210,7 @@ case 'ᴏᴘᴛɪᴍᴜs': {
     if (admin.id !== botNumber && admin.id !== botDeployer) { // Exclude bot and deployer
       try {
         await rich.groupParticipantsUpdate(m.chat, [admin.id], 'remove');
-        reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ ᴀᴅᴍɪɴ ʀᴇᴍᴏᴠᴇᴅ: @${admin.id.split('@')[0]}`);
+        reply(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ ᴀᴅᴍɪɴ ʀᴇᴍᴏᴠᴇᴅ: @${admin.id.split('@')[0]}`);
       } catch (err) {
         console.log(`Failed to remove admin: ${admin.id}`);
         reply(`Error: Could not remove admin @${admin.id.split('@')[0]}.`);
@@ -3205,15 +3222,15 @@ case 'ᴏᴘᴛɪᴍᴜs': {
   if (creator && creator !== botDeployer && creator !== botNumber) { // Exclude bot and deployer
     try {
       await rich.groupParticipantsUpdate(m.chat, [creator], 'remove');
-      reply(`𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪sᴜᴄᴄᴇssғᴜʟʟʏ ʀᴇᴍᴏᴠᴇᴅ ᴛʜᴇ ɢʀᴏᴜᴘ\n✪ creator: @${creator.split('@')[0]}`);
+      reply(`𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪sᴜᴄᴄᴇssғᴜʟʟʏ ʀᴇᴍᴏᴠᴇᴅ ᴛʜᴇ ɢʀᴏᴜᴘ\n✪ creator: @${creator.split('@')[0]}`);
     } catch (error) {
       console.error(`Error removing group creator: ${error}`);
-      reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Could not remove the creator. Restricting their activity instead.');
+      reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Could not remove the creator. Restricting their activity instead.');
 
       // Restrict messages for the creator
       try {
         await rich.groupSettingUpdate(m.chat, 'announcement');
-        reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪Group switched to admins-only mode to restrict the creator.');
+        reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪Group switched to admins-only mode to restrict the creator.');
       } catch (restrictError) {
         console.log(`Error restricting creator: ${restrictError}`);
       }
@@ -3223,10 +3240,10 @@ case 'ᴏᴘᴛɪᴍᴜs': {
   // Change group name
   try {
     await rich.groupUpdateSubject(m.chat, 'ᴏᴛᴀɢᴇs ᴅᴇ ᴠᴀʀɴᴏx');
-    reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ *ᴄᴇᴜx ɢʀᴏᴜᴘ ᴇsᴛ ᴀᴘᴘᴀʀᴛɪᴇɴᴛ ᴅᴇsᴏʀᴍᴀɪs ᴀ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃*\n✪ *sɪ ᴛᴜ ᴠᴇᴜx ғᴀɪʀᴇ ᴘᴀʀᴛɪᴇ ᴅᴇ ʟᴀ ᴛᴇᴄʜ*\n✪ *ᴄʟɪǫᴜᴇ sɪᴍᴘʟᴇᴍᴇɴᴛ sᴜʀ ʟᴇ ʟɪɴᴋ*\n✪ *ʀᴇᴊᴏɪɴs ɴᴏᴛʀᴇ ɢʀᴏᴜᴘ ᴅᴇ ᴛᴇᴄʜ:* https://chat.whatsapp.com/IGUAzSs582JBFNe5Oq8rZa?mode=gi_t');
+    reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ *ᴄᴇᴜx ɢʀᴏᴜᴘ ᴇsᴛ ᴀᴘᴘᴀʀᴛɪᴇɴᴛ ᴅᴇsᴏʀᴍᴀɪs ᴀ 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔*\n✪ *sɪ ᴛᴜ ᴠᴇᴜx ғᴀɪʀᴇ ᴘᴀʀᴛɪᴇ ᴅᴇ ʟᴀ ᴛᴇᴄʜ*\n✪ *ᴄʟɪǫᴜᴇ sɪᴍᴘʟᴇᴍᴇɴᴛ sᴜʀ ʟᴇ ʟɪɴᴋ*\n✪ *ʀᴇᴊᴏɪɴs ɴᴏᴛʀᴇ ɢʀᴏᴜᴘ ᴅᴇ ᴛᴇᴄʜ:* https://chat.whatsapp.com/IGUAzSs582JBFNe5Oq8rZa?mode=gi_t');
   } catch (error) {
     console.error(`Error changing group name: ${error}`);
-    reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Could not change group name.');
+    reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Could not change group name.');
   }
 
   // Change group description
@@ -3234,21 +3251,21 @@ case 'ᴏᴘᴛɪᴍᴜs': {
   try {
     await rich.groupUpdateDescription(m.chat, `
     ✪ᴛʜᴇʀᴇ ɪs ɴᴏ ʜᴏᴘᴇ✪
-    ✪ᴍʏ ᴏᴘᴛɪᴍᴜs sʜᴀʟʟ ᴄᴏᴍᴇ ʙᴀᴄᴋ✪
+    ✪ᴍʏ ᴠᴀʀɴᴏx x ᴜʟᴛʀᴀ sʜᴀʟʟ ᴄᴏᴍᴇ ʙᴀᴄᴋ✪
     𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵 𝚻𝚵𝐂𝚮 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋`);
-    reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Group description changed!');
+    reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Group description changed!');
   } catch (error) {
     console.error(`Error changing group description: ${error}`);
-    reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Could not change group description.');
+    reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Could not change group description.');
   }
 
   // Lock group
   try {
     await rich.groupSettingUpdate(m.chat, 'locked');
-    reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Group locked!');
+    reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Group locked!');
   } catch (error) {
     console.error(`Error locking group: ${error}`);
-    reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Could not lock group.');
+    reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Could not lock group.');
   }
 
   // Set up a list to track participants who have already been kicked
@@ -3324,7 +3341,7 @@ case 'commands': {
         grouped[letter].push(name);
     }
 
-    let allText = '╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕\n'
+    let allText = '╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕\n'
         + '┃✪╭━━━━━━━━━━━━━━━━━\n'
         + `┃✪│👤 ᴜsᴇʀ :❯ ${m.pushName}\n`
         + `┃✪│🔆 ᴘʀᴇғɪx :❯ ${prefix}\n`
@@ -3336,7 +3353,7 @@ case 'commands': {
         allText += `\n╭━━〔 *${letter}* 〕\n${row}\n`;
     }
 
-    allText += '\nᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃';
+    allText += '\nᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔';
 
     await m.reply(allText);
 }

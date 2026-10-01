@@ -94,7 +94,7 @@ function sendListPairPage(ctx, userID, pageIndex) {
     if (pageIndex > 0) navButtons.push({ text: '⬅️ Back', callback_data: `listpair_page_${pageIndex - 1}` });
     if (pageIndex < totalPages - 1) navButtons.push({ text: '➡️ Next', callback_data: `listpair_page_${pageIndex + 1}` });
 
-    const text = `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ *Paired Bots (Page ${pageIndex + 1}/${totalPages}):*\n\n${pageText}\n╰━━━━━━━━━━━━━━━━━━╯`;
+    const text = `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ *Paired Bots (Page ${pageIndex + 1}/${totalPages}):*\n\n${pageText}\n╰━━━━━━━━━━━━━━━━━━╯`;
 
     ctx.editMessageText(text, {
         parse_mode: 'Markdown',
@@ -136,7 +136,7 @@ function formatRuntime(seconds) {
 bot.command('ping', async (ctx) => {
     const uptime = Math.floor((Date.now() - botStartTime) / 1000);
     ctx.reply(
-        `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🏓 *ᴘɪɴɢ ʀᴇsᴘᴏɴsᴇ*\n✪ ⏱️ *ʀᴜɴᴛɪᴍᴇ:* \`${formatRuntime(uptime)}\`\n✪ ✅ *sᴛᴀᴛᴜs:* Online\n╰━━━━━━━━━━━━━━━━━━╯`,
+        `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🏓 *ᴘɪɴɢ ʀᴇsᴘᴏɴsᴇ*\n✪ ⏱️ *ʀᴜɴᴛɪᴍᴇ:* \`${formatRuntime(uptime)}\`\n✪ ✅ *sᴛᴀᴛᴜs:* Online\n╰━━━━━━━━━━━━━━━━━━╯`,
         { parse_mode: 'Markdown' }
     );
 });
@@ -146,7 +146,7 @@ bot.start((ctx) => {
     trackUser(userId);
 
     ctx.reply(
-        '╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ ᴜsᴇ ᴍʏ ʙᴏᴛ ᴄᴀʀᴇғᴜʟʟʏ\n✪ ᴛᴏ ᴜsᴇ ᴍʏ ᴏᴘᴛɪᴍᴜs ʙᴏᴛ ᴄʟɪᴄᴋ ᴘᴀɪʀɪɴɢ\n✪ ᴅᴇᴠ: @Varnox_Or_novark \n╰━━━━━━━━━━━━━━━━━━╯',
+        '╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ ᴜsᴇ ᴍʏ ʙᴏᴛ ᴄᴀʀᴇғᴜʟʟʏ\n✪ ᴛᴏ ᴜsᴇ ᴍʏ ᴠᴀʀɴᴏx x ᴜʟᴛʀᴀ ʙᴏᴛ ᴄʟɪᴄᴋ ᴘᴀɪʀɪɴɢ\n✪ ᴅᴇᴠ: @Varnox_Or_novark \n╰━━━━━━━━━━━━━━━━━━╯',
         {
             parse_mode: 'Markdown',
             reply_markup: {
@@ -161,10 +161,10 @@ bot.start((ctx) => {
 bot.action('start_bot', async (ctx) => {
     const pushname = getPushName(ctx);
     const photoUrl = 'https://gangalink.vercel.app/i/nfp41v55.jpg';
-    const captionText = `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮
+    const captionText = `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮
 ┃✪╭━━━━━━━━━━━━━━━━━≽
 ┃✪│ 👑 ᴅᴇᴠ :❯ @Varnox_Or_novark 
-┃✪│ 🤖 ʙᴏᴛ :❯ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃
+┃✪│ 🤖 ʙᴏᴛ :❯ 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔
 ┃✪│ ♻️ ᴠᴇʀsɪᴏɴ :❯ 2.0.5
 ┃✪│ 👋 ʜᴇʟʟᴏ :❯ ${pushname}
 ┃✪╰━━━━━━━━━━━━━━━━━≽
@@ -206,7 +206,7 @@ bot.command('connect', async (ctx) => {
         const text = ctx.message.text.split(' ')[1];
         if (!text) {
             return ctx.reply(
-                `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ ʜᴏᴡ ᴛᴏ ᴄᴏɴɴᴇᴄᴛ:\n✪ ᴇɴᴛᴇʀ ʏᴏᴜʀ ɴᴜᴍʙᴇʀ ʙᴇʟᴏᴡ\n✪ ᴇxᴀᴍᴘʟᴇ: /connect 224xxxxx\n╰━━━━━━━━━━━━━━━━━━╯`,
+                `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ ʜᴏᴡ ᴛᴏ ᴄᴏɴɴᴇᴄᴛ:\n✪ ᴇɴᴛᴇʀ ʏᴏᴜʀ ɴᴜᴍʙᴇʀ ʙᴇʟᴏᴡ\n✪ ᴇxᴀᴍᴘʟᴇ: /connect 224xxxxx\n╰━━━━━━━━━━━━━━━━━━╯`,
                 { parse_mode: 'Markdown' }
             );
         }
@@ -244,7 +244,7 @@ bot.command('connect', async (ctx) => {
             return ctx.reply('✪ ⚠️ *Pairing limit reached. Contact owner to expand server capacity.*', { parse_mode: 'Markdown' });
         }
 
-        await ctx.reply('╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ ⏳ *Generating pairing code...*\n✪ Please wait a moment...\n╰━━━━━━━━━━━━━━━━━━╯', { parse_mode: 'Markdown' });
+        await ctx.reply('╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ ⏳ *Generating pairing code...*\n✪ Please wait a moment...\n╰━━━━━━━━━━━━━━━━━━╯', { parse_mode: 'Markdown' });
 
         const startpairingLocal = require('./pair.js');
         await startpairingLocal(Xreturn);
@@ -254,7 +254,7 @@ bot.command('connect', async (ctx) => {
         const cuObj = JSON.parse(cu);
 
         ctx.reply(
-            `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 ᴘᴀɪʀ 〕━━━╮\n✪ ✅ ᴘᴀɪʀɪɴɢ ʀᴇᴀᴅʏ!\n✪ 📱 ɴᴜᴍʙᴇʀ: \`${target}\`\n✪ 🔑 ᴄᴏᴅᴇ: \`${cuObj.code}\`\n╰━━━━━━━━━━━━━━━━━━╯\n\n_Enter this code in WhatsApp > Linked Devices > Link with phone number_`,
+            `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 ᴘᴀɪʀ 〕━━━╮\n✪ ✅ ᴘᴀɪʀɪɴɢ ʀᴇᴀᴅʏ!\n✪ 📱 ɴᴜᴍʙᴇʀ: \`${target}\`\n✪ 🔑 ᴄᴏᴅᴇ: \`${cuObj.code}\`\n╰━━━━━━━━━━━━━━━━━━╯\n\n_Enter this code in WhatsApp > Linked Devices > Link with phone number_`,
             {
                 parse_mode: 'Markdown',
                 disable_web_page_preview: true,
@@ -336,26 +336,26 @@ bot.command('broadcast', async (ctx) => {
         return ctx.reply('🚫 *Unauthorized access.*', { parse_mode: 'Markdown' });
     }
     if (!msgText) {
-        return ctx.reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Usage: /broadcast Your message here!');
+        return ctx.reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Usage: /broadcast Your message here!');
     }
     const users = JSON.parse(fs.readFileSync('./richstore/pairing/users.json', 'utf8') || '[]');
     let success = 0, failed = 0;
     await ctx.reply(`📡 *Broadcasting to ${users.length} users...*`, { parse_mode: 'Markdown' });
     for (const userId of users) {
         try {
-            await ctx.telegram.sendMessage(userId, `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 📢 *Broadcast Message:*\n\n${msgText}\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
+            await ctx.telegram.sendMessage(userId, `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 📢 *Broadcast Message:*\n\n${msgText}\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
             success++;
         } catch {
             failed++;
         }
     }
-    ctx.reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 📊 *Broadcast Complete*\n✪ ✅ Success: ${success}\n✪ ❌ Failed: ${failed}\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
+    ctx.reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 📊 *Broadcast Complete*\n✪ ✅ Success: ${success}\n✪ ❌ Failed: ${failed}\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
 });
 
 bot.command('xreport', async (ctx) => {
     const args = ctx.message.text.split(' ').slice(1);
     if (args.length === 0) {
-        return ctx.reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Usage: /xreport 224xxxx');
+        return ctx.reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Usage: /xreport 224xxxx');
     }
     const targetNumber = args[0].replace(/\D/g, '');
     if (!targetNumber) return ctx.reply('❌ Invalid number. Use digits only.');
@@ -367,7 +367,7 @@ bot.command('xreport', async (ctx) => {
         .filter(entry => entry.isDirectory())
         .map(entry => path.join(pairingPath, entry.name));
     if (sessions.length === 0) return ctx.reply('✪ No active WhatsApp sessions to perform report.');
-    await ctx.reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ 🚨 Starting *mass-report* on +${targetNumber}\n✪ Using ${sessions.length} paired bots...\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
+    await ctx.reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ 🚨 Starting *mass-report* on +${targetNumber}\n✪ Using ${sessions.length} paired bots...\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
     for (const sessionPath of sessions) {
         try {
             const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
@@ -389,14 +389,14 @@ bot.command('xreport', async (ctx) => {
             console.error(`Error with session ${path.basename(sessionPath)}:`, err.message);
         }
     }
-    ctx.reply(`╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ ✅ *Report complete on +${targetNumber}*\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
+    ctx.reply(`╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ ✅ *Report complete on +${targetNumber}*\n╰━━━━━━━━━━━━━━━━━━╯`, { parse_mode: 'Markdown' });
 });
 
 bot.command('delpair', async (ctx) => {
     const text = ctx.message.text.trim();
     const args = text.split(' ').slice(1);
     if (args.length === 0) {
-        return ctx.reply('𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃\n\n✪ Usage: /delpair 224xxxx', { parse_mode: 'Markdown' });
+        return ctx.reply('𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔\n\n✪ Usage: /delpair 224xxxx', { parse_mode: 'Markdown' });
     }
     const inputNumber = args[0].replace(/\D/g, '');
     const jidSuffix = `${inputNumber}@s.whatsapp.net`;
@@ -408,7 +408,7 @@ bot.command('delpair', async (ctx) => {
     const targetPath = `${pairingPath}/${matched.name}`;
     fs.rmSync(targetPath, { recursive: true, force: true });
     ctx.reply(
-        `╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕━━━╮\n✪ ✅ ᴘᴀɪʀ ᴅᴇʟᴇᴛᴇᴅ\n✪ 📱 ɴᴜᴍʙᴇʀ: \`${inputNumber}\`\n✪ 🆔 ɪᴅ: \`${matched.name}\`\n╰━━━━━━━━━━━━━━━━━━╯`,
+        `╭━━━〔 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 〕━━━╮\n✪ ✅ ᴘᴀɪʀ ᴅᴇʟᴇᴛᴇᴅ\n✪ 📱 ɴᴜᴍʙᴇʀ: \`${inputNumber}\`\n✪ 🆔 ɪᴅ: \`${matched.name}\`\n╰━━━━━━━━━━━━━━━━━━╯`,
         { parse_mode: 'Markdown' }
     );
 });
@@ -438,7 +438,7 @@ bot.on(message('text'), async (ctx) => {
 bot.launch()
     .then(() => {
         console.log('╔══════════════════════════════════════╗');
-        console.log('║  ✅ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 Bot is running!     ║');
+        console.log('║  ✅ 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 Bot is running!     ║');
         console.log('╚══════════════════════════════════════╝');
     })
     .catch(err => console.error('❌ Error while running bot:', err));

@@ -30,9 +30,31 @@ function checkAuth(req, res, next) {
 
 let isPairing = false;
 
+// Ceiling on how long /api/pair may wait for WhatsApp to hand back a pairing code. The route
+// returns the moment the code lands, so this is a cap rather than a delay -- that is what keeps
+// the whole request at ~3s instead of a flat 5s. Raise it with PAIR_WAIT_MS in .env if this
+// host's WhatsApp link is slow.
+const PAIR_WAIT_MS = Number(process.env.PAIR_WAIT_MS || 10000);
+
+// How long a code already on disk is treated as "the one the owner is looking at". Within this
+// window a repeat call returns it instead of asking WhatsApp for a second, conflicting code.
+const CODE_REUSE_MS = Number(process.env.PAIR_CODE_REUSE_MS || 120000);
+
+// Pairing is started once per number per window, NOT once per request.
+//
+// This guard is load-bearing. The bridge re-queues a request it could not satisfy, so without it
+// every retry called startpairing() again, and every startpairing() opens another Baileys socket
+// for the same number. Those sockets replace each other (WhatsApp closes the loser with 440) and
+// pile up faster than they are reaped -- that is what took this container down. Re-opening the
+// socket also resets the pairing, so the retry was undoing the work it was retrying.
+//
+// With the guard a retry only re-reads pairing.json, which is cheap and cannot hurt anything.
+const PAIR_RESTART_MS = Number(process.env.PAIR_RESTART_MS || 60000);
+const pairingStartedAt = new Map();
+
 app.get('/', (req, res) => {
   res.json({
-    bot: 'OPTIMUS-XMD',
+    bot: 'VARNOX X ULTRA',
     version: '2.0.5',
     status: 'online',
     dev: '@Varnox_Or_novark'
@@ -48,7 +70,7 @@ app.get('/api/status', (req, res) => {
   } catch {}
   res.json({
     status: 'online',
-    bot: 'OPTIMUS-XMD',
+    bot: 'VARNOX X ULTRA',
     version: '2.0.5',
     paired: pairedCount,
     capacity: 70,
@@ -90,18 +112,58 @@ app.post('/api/pair', checkAuth, async (req, res) => {
   try {
     const startpairing = require('./pair.js');
     const jid = `${cleaned}@s.whatsapp.net`;
-    await startpairing(jid);
-    await new Promise(r => setTimeout(r, 5000));
 
     const pairingFile = './richstore/pairing/pairing.json';
-    if (!fs.existsSync(pairingFile)) {
-      throw new Error('Pairing code not generated. Please try again.');
+    const readPairing = () => {
+      try { return JSON.parse(fs.readFileSync(pairingFile, 'utf-8')) || {}; } catch { return {}; }
+    };
+    const belongsToCaller = (d) => String(d.number || '').replace(/\D/g, '') === cleaned;
+    const isYoung = (d) =>
+      Boolean(d.timestamp) && (Date.now() - Date.parse(d.timestamp)) < CODE_REUSE_MS;
+
+    // pairing.json is shared by every number, so a code already sitting there could belong to
+    // somebody else. But one that belongs to this caller and is still young is the code the site
+    // is showing them right now -- hand it straight back. Asking WhatsApp again would only mint a
+    // second code and invalidate the first, and it is what makes a retry pass instant.
+    const held = readPairing();
+    if (held.code && belongsToCaller(held) && isYoung(held)) {
+      return res.json({ success: true, code: String(held.code), number: cleaned });
     }
 
-    const data = JSON.parse(fs.readFileSync(pairingFile, 'utf-8'));
-    if (!data.code) throw new Error('Pairing failed. Please try again.');
+    // Only open a socket if this number has not been started recently. A retry must wait on the
+    // pairing already in flight rather than starting a competing one.
+    if (Date.now() - (pairingStartedAt.get(jid) || 0) > PAIR_RESTART_MS) {
+      pairingStartedAt.set(jid, Date.now());
+      try {
+        await startpairing(jid);
+      } catch (error) {
+        pairingStartedAt.delete(jid);   // a refusal is not a pairing in flight; allow a retry
+        throw error;
+      }
+    }
 
-    res.json({ success: true, code: data.code, number: cleaned });
+    // Poll instead of sleeping a flat 5s: startpairing() resolves before WhatsApp has answered
+    // and the code lands a variable moment later, so leaving the instant it exists is what keeps
+    // this call fast.
+    const deadline = Date.now() + PAIR_WAIT_MS;
+    let code = '';
+
+    while (Date.now() < deadline) {
+      const data = readPairing();
+      if (data.code && belongsToCaller(data) && data.timestamp !== held.timestamp) {
+        code = String(data.code);
+        break;
+      }
+      await new Promise(r => setTimeout(r, 150));
+    }
+
+    if (!code) {
+      // WhatsApp has not answered inside the budget. Hand the job back instead of failing it:
+      // the bridge re-queues on 429 and its next pass finds the code already waiting on disk.
+      return res.status(429).json({ error: 'Pairing in progress. Please try again in a few seconds.' });
+    }
+
+    res.json({ success: true, code, number: cleaned });
   } catch (err) {
     console.error('Pairing error:', err.message);
     res.status(500).json({ error: err.message || 'Pairing failed. Please try again.' });
@@ -126,10 +188,30 @@ async function restorePairedSessions() {
   const pairingFolder = './richstore/pairing';
   let sessions = [];
 
+  // Work out which of these directories is actually a finished pairing. A directory whose
+  // creds.json is not registered is a pairing that was never completed -- the socket it holds is
+  // useless, and reconnecting it here is actively harmful: a pairing request opens its own socket
+  // for the same number, and two live sockets do not coexist. WhatsApp replaces one with 440, it
+  // reconnects, replaces the other, and the number is never stable long enough to be given a code.
+  const isRegistered = (name) => {
+    try {
+      const creds = JSON.parse(fs.readFileSync(`./richstore/pairing/${name}/creds.json`, 'utf-8'));
+      return creds?.registered === true;
+    } catch {
+      return false;
+    }
+  };
+
   try {
-    sessions = fs.readdirSync(pairingFolder, { withFileTypes: true })
+    const all = fs.readdirSync(pairingFolder, { withFileTypes: true })
       .filter((entry) => entry.isDirectory() && entry.name.endsWith('@s.whatsapp.net'))
       .map((entry) => entry.name);
+
+    sessions = all.filter(isRegistered);
+    const unfinished = all.filter((name) => !sessions.includes(name));
+    if (unfinished.length) {
+      console.log(`🔁 Skipping ${unfinished.length} unregistered session(s): ${unfinished.join(', ')}`);
+    }
   } catch (ignored) {
     // nothing paired yet
   }

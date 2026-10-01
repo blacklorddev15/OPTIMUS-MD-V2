@@ -1,4 +1,4 @@
-# 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 v2.0.5
+# 𝗩𝗔𝗥𝗡𝗢𝗫 𝗫 𝗨𝗟𝗧𝗥𝗔 v2.0.5
 
   > WhatsApp Multi-Device Bot with Telegram Pairing Interface
 
