@@ -401,6 +401,14 @@ async function startpairing(nexusDevNumber) {
             if (nexusboijid.key.id.startsWith('BAE5') && nexusboijid.key.id.length === 16) return;
             nexusboiConnect = nexus
             mek = smsg(nexusboiConnect, nexusboijid, store);
+            // One line per incoming message, to a file rather than the console: Node buffers
+            // stdout on a panel, so otherwise there is no way to tell "the message never arrived"
+            // from "it arrived and something rejected it".
+            try {
+                const mk = nexusboijid.key || {};
+                require('fs').appendFileSync('messages.log',
+                    `[${new Date().toISOString()}] in   jid=${mk.remoteJid || '?'} type=${mek && mek.mtype} fromMe=${Boolean(mk.fromMe)} text=${JSON.stringify(String((mek && (mek.text || mek.body)) || '').slice(0, 60))}\n`);
+            } catch (ignored) {}
             require("./case")(nexusboiConnect, mek, chatUpdate, store);
         } catch (err) {
             // Also to a file. Everything a message goes through is inside this one try, so a

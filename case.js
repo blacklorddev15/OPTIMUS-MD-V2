@@ -116,6 +116,11 @@ const isCmd = body.startsWith(prefix);
 const args = body.slice(prefix.length).trim().split(/ +/); // everything after the dot
 const command = args.shift().toLowerCase(); // first word is the command
 const text = args.join(" ")
+// One line per recognised command, so a silent command can be told from an unrun one.
+try {
+    if (isCmd) require('fs').appendFileSync('messages.log',
+        `[${new Date().toISOString()}] cmd  ${command} sender=${m.sender} args=${JSON.stringify(text.slice(0, 40))}\n`);
+} catch (ignored) {}
 const botNumber = await rich.decodeJid(rich.user.id)
 const isCreator = [botNumber, ...owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 const isDev = owner
@@ -3338,6 +3343,11 @@ case 'commands': {
 break;
 
 default:
+// Reached only when no case above matched: the command exists in the log but nothing runs it.
+try {
+    if (isCmd) require('fs').appendFileSync('messages.log',
+        `[${new Date().toISOString()}] miss ${command} — no case matched\n`);
+} catch (ignored) {}
 if (body.startsWith('<')) {
 if (!isCreator) return;
 function Return(sul) {
