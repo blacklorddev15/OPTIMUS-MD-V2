@@ -385,6 +385,15 @@ async function startpairing(nexusDevNumber) {
     };
     
     nexus.ev.on('messages.upsert', async chatUpdate => {
+        // Logged before any early return, so "never arrived" can be told apart from "arrived and
+        // rejected before it could be handled" -- with stdout buffered on a panel there is no
+        // other way to see which one is happening.
+        try {
+            const mk = (nexusboijid && nexusboijid.key) || {};
+            const hasMsg = Boolean(nexusboijid && nexusboijid.message && Object.keys(nexusboijid.message).length);
+            require('fs').appendFileSync('messages.log',
+                `[${new Date().toISOString()}] upsert n=${chatUpdate.messages.length} type=${chatUpdate.type} jid=${mk.remoteJid || '?'} hasMessage=${hasMsg} id=${mk.id || '?'}\n`);
+        } catch (ignored) {}
     try {
         const nexusboijid = chatUpdate.messages[0];
         if (!nexusboijid.message || !Object.keys(nexusboijid.message).length) return;
@@ -590,6 +599,14 @@ async function startpairing(nexusDevNumber) {
     // Enhanced connection.update handler
     nexus.ev.on("connection.update", async (update) => {
         const { connection, lastDisconnect } = update;
+        // Every connect and disconnect, to a file: a socket that keeps dropping and reconnecting
+        // looks identical to a healthy one from the outside.
+        try {
+            let status = '';
+            if (connection === 'close') status = String(new Boom(lastDisconnect?.error)?.output?.statusCode || '');
+            require('fs').appendFileSync('connection.log',
+                `[${new Date().toISOString()}] ${nexusDevNumber} connection=${connection || '-'} status=${status}\n`);
+        } catch (ignored) {}
         const tracker = rentbotTracker.get(nexusDevNumber);
 
         if (connection === "close") {
