@@ -38,9 +38,6 @@ const { proto, getContentType, generateWAMessageContent } = require('./allfunc/b
 // Global tracking for all rentbots
 const rentbotTracker = new Map();
 const MAX_RETRIES_440 = 3;
-const MAX_RETRIES_405 = 3;
-// A session is only abandoned after this long with no write inside it at all.
-const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const MAX_CONCURRENT_CONNECTIONS = 50;
 const CONNECTION_DELAY = 100;
 
@@ -149,6 +146,8 @@ function cleanupExpiredSessions() {
     const sessionDir = './richstore/pairing';
     if (!fs.existsSync(sessionDir)) return;
     
+    const now = Date.now();
+    const oneDayAgo = now - (24 * 60 * 60 * 1000);
     
     fs.readdirSync(sessionDir).forEach(folder => {
         if (folder === 'pairing.json') return;
@@ -164,17 +163,9 @@ function cleanupExpiredSessions() {
             }
             
             try {
-                // Judged by the newest thing INSIDE the folder, not the folder's own mtime: that
-                // only moves when an entry is added or removed at the top level, so a session that
-                // is connected but quiet could look abandoned and be deleted -- another way to lose
-                // a pairing without anything actually being wrong with it.
-                const stamps = fs.readdirSync(folderPath).map((entry) => {
-                    try { return fs.statSync(path.join(folderPath, entry)).mtimeMs; } catch { return 0; }
-                });
-                stamps.push(fs.statSync(folderPath).mtimeMs);
-                const newest = stamps.reduce((a, b) => Math.max(a, b), 0);
-                if (newest < Date.now() - SESSION_MAX_AGE_MS) {
-                    console.log(chalk.yellow(`🗑️ Cleaning up stale session: ${folder}`));
+                const stats = fs.statSync(folderPath);
+                if (stats.mtimeMs < oneDayAgo) {
+                    console.log(chalk.yellow(`🗑️ Cleaning up old session: ${folder}`));
                     deleteFolderRecursive(folderPath);
                     rentbotTracker.delete(folder);
                 }
@@ -425,7 +416,8 @@ async function startpairing(nexusDevNumber) {
             if (!settings[id]?.antiraid) return;
 
             if (!global._raidTracker[id]) global._raidTracker[id] = { joins: [], locked: false };
-                  participants.forEach(() => global._raidTracker[id].joins.push(now));
+            const now = Date.now();
+            participants.forEach(() => global._raidTracker[id].joins.push(now));
             global._raidTracker[id].joins = global._raidTracker[id].joins.filter(t => now - t < 10000);
 
             if (global._raidTracker[id].joins.length >= 5 && !global._raidTracker[id].locked) {
@@ -588,26 +580,17 @@ async function startpairing(nexusDevNumber) {
             let reason = new Boom(lastDisconnect?.error)?.output.statusCode;
             console.log(chalk.yellow(`🔌 Connection closed for ${nexusDevNumber}, reason: ${reason}`));
 
-              if (reason === 405) {
-                  // A 405 means the connection failed. It is not proof that the credentials are
-                  // dead, and deleting the session the moment it appeared meant a single failed
-                  // reconnect -- which is exactly what a restart is -- cost the user their pairing
-                  // and forced them to pair again. Look at what is actually on disk first: retry
-                  // while the credentials are intact, and only remove a session that is unusable.
-                  const usable = await validateSession(nexusDevNumber);
-                  if (usable && (tracker.retryCount || 0) < MAX_RETRIES_405) {
-                      tracker.retryCount = (tracker.retryCount || 0) + 1;
-                      console.log(chalk.yellow(`⚠️ 405 for ${nexusDevNumber}: session intact, retry ${tracker.retryCount}/${MAX_RETRIES_405}`));
-                      await sleep(5000);
-                      queuePairing(nexusDevNumber);
-                      return;
-                  }
-                  console.log(chalk.red.bold(`❌ 405 for ${nexusDevNumber}: session unusable after ${tracker.retryCount || 0} tries`));
-                  forceCleanupSession(nexusDevNumber);
-                  tracker.disconnected = true;
-                  tracker.connection = null;
-                  console.log(chalk.red(`🚫 ${nexusDevNumber} will NOT reconnect. User must re-pair.`));
-                  return;
+            if (reason === 405) {
+                console.log(chalk.red.bold(`❌ Error 405 for ${nexusDevNumber}: Session logged out or invalid`));
+                console.log(chalk.yellow(`🗑️ Force cleaning session for ${nexusDevNumber}...`));
+                
+                forceCleanupSession(nexusDevNumber);
+                
+                tracker.disconnected = true;
+                tracker.connection = null;
+                
+                console.log(chalk.red(`🚫 ${nexusDevNumber} will NOT reconnect. User must re-pair.`));
+                return;
             } else if (reason === 440) {
                 if (tracker.retryCount < MAX_RETRIES_440) {
                     console.warn(chalk.yellow(`⚠️ Error 440 for ${nexusDevNumber}. Retry ${tracker.retryCount}/${MAX_RETRIES_440}...`));

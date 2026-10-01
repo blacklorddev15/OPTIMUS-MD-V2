@@ -114,45 +114,6 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
-// ─── RECONNECT WHAT IS ALREADY PAIRED ────────────────────────────────────────
-// Nothing did this before, and it is why a restart looked like losing the pairing: the bot only
-// ever connected when somebody asked for a pairing code (POST /api/pair, or the .pair command),
-// so after a restart every already-paired number sat idle until a new request happened to arrive.
-//
-// startpairing() only asks WhatsApp for a code when the credentials are NOT registered, so a
-// number that is already paired simply reconnects here: no new pairing, no new code, nothing for
-// the user to do.
-async function restorePairedSessions() {
-  const pairingFolder = './richstore/pairing';
-  let sessions = [];
-
-  try {
-    sessions = fs.readdirSync(pairingFolder, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory() && entry.name.endsWith('@s.whatsapp.net'))
-      .map((entry) => entry.name);
-  } catch (ignored) {
-    // nothing paired yet
-  }
-
-  if (!sessions.length) {
-    console.log('🔁 No paired sessions to restore yet.');
-    return;
-  }
-
-  console.log(`🔁 Restoring ${sessions.length} paired session(s)...`);
-  const startpairing = require('./pair.js');
-
-  for (const jid of sessions) {
-    try {
-      await startpairing(jid);
-      console.log(`🔁 ${jid} resumed`);
-    } catch (error) {
-      console.error(`🔁 ${jid} could not resume: ${error.message}`);
-    }
-    await new Promise((resolve) => setTimeout(resolve, 2000));   // one at a time
-  }
-}
-
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ HTTP API server running on port ${PORT}`);
 
@@ -164,12 +125,6 @@ app.listen(PORT, '0.0.0.0', () => {
   require('./lib/siteBridge').startSiteBridge()
     .then((bridge) => { global.siteBridge = bridge; })
     .catch((error) => console.error('[site-bridge] failed to start:', error.message));
-
-  // Bring back the numbers that are already paired, so restarting does not look like losing the
-  // pairing. Delayed a few seconds to let the socket layer and the bridge settle first.
-  setTimeout(() => {
-    restorePairedSessions().catch((error) => console.error('[restore] failed:', error.message));
-  }, 5000);
 });
 
 module.exports = app;
