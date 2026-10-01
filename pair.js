@@ -196,6 +196,36 @@ function ensureDirectoryExists(dirPath) {
     }
 }
 
+// Stand-in for the makeInMemoryStore that Baileys used to export and no longer does.
+//
+// Only the pieces this bot actually reaches for: bind() (fed by messages.upsert, which includes
+// our own sends because emitOwnEvents is on), loadMessage() for getQuotedObj, and an empty
+// presences object for the presence command in case.js. Bounded, because this is per socket.
+function makeLiteStore(maxMessages = 2000) {
+    const messages = new Map();
+
+    return {
+        presences: {},
+
+        bind(ev) {
+            ev.on('messages.upsert', ({ messages: batch }) => {
+                for (const msg of batch || []) {
+                    const jid = msg?.key?.remoteJid;
+                    const id = msg?.key?.id;
+                    if (!jid || !id || !msg.message) continue;
+                    if (messages.size >= maxMessages) messages.delete(messages.keys().next().value);
+                    messages.set(`${jid}:${id}`, msg.message);
+                }
+            });
+        },
+
+        async loadMessage(jid, id) {
+            const message = messages.get(`${jid}:${id}`);
+            return message ? { key: { remoteJid: jid, id }, message } : undefined;
+        },
+    };
+}
+
 async function startpairing(nexusDevNumber) {
     // Ensure base directory exists
     ensureDirectoryExists('./richstore/pairing');
@@ -241,7 +271,6 @@ async function startpairing(nexusDevNumber) {
         default: makeWASocket,
         jidDecode,
         DisconnectReason,
-        PHONENUMBER_MCC,
         makeCacheableSignalKeyStore,
         useMultiFileAuthState,
         Browsers,
@@ -249,12 +278,13 @@ async function startpairing(nexusDevNumber) {
         proto,
         downloadContentFromMessage,
         generateWAMessageContent,
-        fetchLatestBaileysVersion,
-        makeInMemoryStore
+        fetchLatestBaileysVersion
     } = await loadBaileys();
-    const store = makeInMemoryStore
-        ? makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
-        : null;
+    // Neither 6.7 nor 7.0.0-rc14 exports makeInMemoryStore any more, so the old
+    // `makeInMemoryStore ? ... : null` always produced null. Everything reading `store` was
+    // therefore either dead or a crash waiting to happen: store.loadMessage in getQuotedObj, and
+    // store.presences in case.js. Use our own small cache instead.
+    const store = makeLiteStore();
     const pairingCode = true;
     const useMobile = false;
 
@@ -272,22 +302,26 @@ async function startpairing(nexusDevNumber) {
     const nexus = makeWASocket({
         logger: pino({ level: "silent" }),
         printQRInTerminal: false,
-        auth: state,
+        // Give Baileys a caching key store rather than the raw multi-file one: it holds the Signal
+        // keys in memory. This is the configuration the working paired sockets on this host use,
+        // and a stalled/uncached key store is how a session drifts out of step in the first place.
+        auth: {
+            creds: state.creds,
+            keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })),
+        },
         version,
         browser: Browsers.ubuntu("Edge"),
-        getMessage: async key => {
-            if (!store) return { conversation: '' };
-            const jid = key.remoteJid;
-            const msg = await store.loadMessage(jid, key.id);
-            return msg?.message || '';
-        },
+        // No getMessage here, deliberately. It was answering every decryption retry with an empty
+        // conversation, which is worse than having none at all. 7.0.0-rc14 caches outgoing
+        // messages for retries itself and defaults getMessage to `async () => undefined`, so the
+        // correct move is to leave it out.
         shouldSyncHistoryMessage: msg => {
             console.log(`\x1b[32mLoading Chat [${msg.progress}%]\x1b[39m`);
             return !!msg.syncType;
         },
         connectTimeoutMs: 60000,
         defaultQueryTimeoutMs: 60000,
-        keepAliveIntervalMs: 30000,
+        keepAliveIntervalMs: 15000,
         emitOwnEvents: true,
         fireInitQueries: true,
         generateHighQualityLinkPreview: true,
