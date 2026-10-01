@@ -352,6 +352,91 @@ case 'buddha': {
     // Randomly select an image for the menu
     const richImageUrl = menuImages[Math.floor(Math.random() * menuImages.length)];
 
+    // Command list, generated from this file's own case labels rather than typed by hand.
+    // The template this replaces came from another bot: of its 98 entries, 24 were commands that
+    // do not exist here (ban, unban, gx1-gx12, sel, let, logomarker, lag3dtext, antiake, antilove,
+    // antiprivate, antistick) and it left out 203 that do. Generated data cannot drift like that.
+    const menuSections = [
+        ['🛠 𝗢𝗪𝗡𝗘𝗥', [
+        'OFF', 'ON', 'alive', 'allmenu', 'autobio', 'autoreact', 'autoread', 'autorecording',
+        'autorecordtype', 'autotyping', 'autoviewstatus', 'bot', 'buddha', 'commands', 'connect',
+        'dev', 'fullmenu', 'getpp', 'iplookup', 'jid', 'menu', 'myip', 'owner', 'pair', 'ping',
+        'private', 'public', 'repo', 'runtime', 'self', 'setpp'
+        ]],
+        ['📦 𝗚𝗘𝗡𝗘𝗥𝗔𝗟', [
+        'advancedglow', 'advice', 'ascii', 'book', 'calculate', 'coffee', 'coin', 'compliment',
+        'currency', 'dadjoke', 'define', 'dictionary', 'fact', 'fat', 'funfact', 'gamefact',
+        'genpass', 'h', 'horoscope', 'idch', 'inspire', 'joke', 'l', 'math', 'mathfact', 'meme',
+        'movie', 'moviequote', 'p', 'pdftotext', 'prog', 'progquote', 'qrcode', 'quote',
+        'quotememe', 'reactch', 'readqr', 'recipe', 'remind', 'reverse', 'say', 'sciencefact',
+        'shorturl', 'time', 'tourl', 'track', 'trackuser', 'triviafact', 'urban', 'url', 'weather',
+        'wiki'
+        ]],
+        ['🎮 𝗚𝗔𝗠𝗘', [
+        '8ball', 'coinbattle', 'dare', 'dice', 'emojiquiz', 'findnumber', 'guess', 'hangman',
+        'numbattle', 'numberbattle', 'rps', 'rpsls', 'searchnumber', 'snumber', 'tictactoe',
+        'trivia', 'truth'
+        ]],
+        ['🎭 𝗔𝗡𝗜𝗠𝗘', [
+        'animebite', 'animeblush', 'animebonk', 'animebully', 'animecringe', 'animedance',
+        'animeglomp', 'animehappy', 'animehighfive', 'animekill', 'animelick', 'animepoke',
+        'animesearch', 'animesmile', 'animesmug', 'animewave', 'animewink', 'animewlp',
+        'animeyeet', 'awoo', 'bird', 'bite', 'blush', 'bonk', 'bully', 'cat', 'cringe', 'cry',
+        'cuddle', 'dance', 'dog', 'fox', 'glomp', 'handhold', 'happy', 'highfive', 'hug', 'kill',
+        'kiss', 'koala', 'lick', 'nom', 'panda', 'pat', 'poke', 'rwaifu', 'shinobu', 'slap',
+        'smile', 'smug', 'squirrel', 'waifu', 'wave', 'wink', 'yeet'
+        ]],
+        ['🖼 𝗚𝗙𝗫 / 𝗧𝗘𝗫𝗧', [
+        'blackpinklogo', 'blackpinkstyle', 'cartoonstyle', 'deletingtext', 'effectclouds',
+        'flag3dtext', 'flagtext', 'freecreate', 'galaxystyle', 'galaxywallpaper', 'gfx', 'gfx10',
+        'gfx11', 'gfx12', 'gfx2', 'gfx3', 'gfx4', 'gfx5', 'gfx6', 'gfx7', 'gfx8', 'gfx9',
+        'glitchtext', 'glowingtext', 'gradienttext', 'lighteffects', 'logomaker', 'luxurygold',
+        'makingneon', 'multicoloredneon', 'neonglitch', 'papercutstyle', 'pixelglitch',
+        'royaltext', 'sandsummer', 'style1917', 'summerbeach', 'typographytext', 'underwatertext',
+        'watercolortext', 'writetext'
+        ]],
+        ['🎵 𝗔𝗨𝗗𝗜𝗢', [
+        'bass', 'blown', 'deep', 'earrape', 'fast', 'nightcore', 'paptt', 'robot', 'slow',
+        'smooth'
+        ]],
+        ['📥 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗', [
+        'apk', 'apkdl', 'play', 'play2', 'tiktok', 'tomp3', 'tomp4', 'tt', 'yts', 'ytsearch'
+        ]],
+        ['✨ 𝗖𝗢𝗡𝗩𝗘𝗥𝗦𝗜𝗢𝗡', [
+        'qc', 'toimg', 'vv', 'vv2'
+        ]],
+        ['🤖 𝗔𝗜', [
+        'ai', 'gpt4', 'openai', 'otage', 'xxai'
+        ]],
+        ['⚠️ 𝗔𝗡𝗧𝗜', [
+        'antibadword', 'antibot', 'anticmd', 'antidelete', 'antiinsult', 'antilink', 'antiporno',
+        'antiprive', 'antipseudo', 'antipurgeur', 'antiraid', 'antireact', 'antispam',
+        'antisticker', 'antitag'
+        ]],
+        ['📭 𝗚𝗥𝗢𝗨𝗣', [
+        'add', 'admin', 'block', 'blocked', 'closetime', 'creategc', 'creategroup', 'del',
+        'delete', 'demote', 'dlt', 'grouplink', 'hidetag', 'kick', 'kickadmins', 'kickall', 'left',
+        'listadmin', 'listonline', 'mute', 'opentime', 'promote', 'resetlink', 'tag', 'tagadmin',
+        'tagall', 'totag', 'unblock', 'unblocked', 'unmute', 'welcome'
+        ]],
+    ];
+
+    const smallCaps = (name) => name.replace(/[a-z]/g, (c) => ({
+        a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ',
+        l: 'ʟ', m: 'ᴍ', n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ', s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ',
+        w: 'ᴡ', x: 'x', y: 'ʏ', z: 'ᴢ'
+    }[c] || c));
+
+    let menuList = '';
+    let menuCount = 0;
+    for (const [title, names] of menuSections) {
+        menuList += `\n┃✪│❍ 〔${title} 〕\n`;
+        for (const name of names) {
+            menuList += `┃✪│❍${smallCaps(name)}\n`;
+            menuCount += 1;
+        }
+    }
+
     const menuText = `
 ╭━━━〔 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃 〕
 ┃✪╭━━━━━━━━━━━━━━━━━
@@ -361,130 +446,13 @@ case 'buddha': {
 ┃✪│⏰️ ᴛɪᴍᴇ :❯ ${new Date().toLocaleTimeString()}
 ┃✪│🌐 ᴍᴏᴅᴇ :❯ ${rich.public ? 'public' : 'Self'}
 ┃✪│♻️ ᴠᴇʀsɪᴏɴ :❯ 2.0.5
+┃✪│📦 ᴛᴏᴛᴀʟ :❯ ${menuCount}
 ╰━━━━━━━━━━━━━━━━━≽
 ${readMore}
 ╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍ 〔🛠𝗢𝗪𝗡𝗘𝗥 〕
+${menuList}
 ╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍sᴇʟғ
-┃✪│❍ᴘᴜʙʟɪᴄ
-┃✪│❍ᴘᴀɪʀ
-┃✪│❍ʀᴇᴘᴏ
-┃✪│❍ᴀʟɪᴠᴇ
-┃✪│❍ᴘɪɴɢ
-┃✪│❍ᴠᴠ
-┃✪│❍ᴀɪ
-╰━━━━━━━━━━━━━━━┈⊷
-╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍〔📦𝗚𝗘𝗡𝗘𝗥𝗔𝗟 〕
-╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍ᴅᴇᴍᴏᴛᴇ
-┃✪│❍ᴄʟᴏsᴇᴛɪᴍᴇ
-┃✪│❍ᴏᴘᴇɴᴛɪᴍᴇ
-┃✪│❍ᴜɴᴍᴜᴛᴇ
-┃✪│❍ᴜɴʙᴀɴ
-┃✪│❍ᴘʀᴏᴍᴏᴛᴇ
-┃✪│❍ᴍᴜᴛᴇ
-┃✪│❍ʙᴀɴ
-┃✪│❍ᴛᴀɢᴀʟʟ
-┃✪│❍ʜɪᴅᴇᴛᴀɢ
-┃✪│❍ᴀɴᴛɪʟɪɴᴋ
-┃✪│❍ʙʟᴏᴄᴋ
-┃✪│❍ᴜɴʙʟᴏᴄᴋ
-┃✪│❍ᴊᴏɪɴ
-┃✪│❍ʟᴇғᴛ
-┃✪│❍ᴡᴇʟᴄᴏᴍᴇ
-┃✪│❍ᴊɪᴅ
-┃✪│❍ɪᴅᴄʜ
-┃✪│❍ᴛᴀɢᴀʟʟ
-┃✪│❍ʜɪᴅᴇᴛᴀɢ
-╰━━━━━━━━━━━━━━━┈⊷
-╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍〔📭𝗞𝗜𝗖𝗞 𝗠𝗘𝗡𝗨 〕
-╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍ᴋɪᴄᴋ
-┃✪│❍ᴋɪᴄᴋᴀᴅᴍɪɴs
-┃✪│❍ᴋɪᴄᴋᴀʟʟ
-╰━━━━━━━━━━━━━━━┈⊷
-╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍〔⚠️𝗔𝗡𝗧𝗜-𝗠𝗘𝗡𝗨 〕
-╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍ᴀɴᴛɪʟᴏᴠᴇ
-┃✪│❍ᴀɴᴛɪᴘsᴇᴜᴅᴏ
-┃✪│❍ᴀɴᴛɪʙᴀᴅᴡᴏʀᴅ
-┃✪│❍ᴀɴᴛɪғᴀᴋᴇ
-┃✪│❍ᴀɴᴛɪsᴘᴀᴍ
-┃✪│❍ᴀɴᴛɪᴛᴀɢ
-┃✪│❍ᴀɴᴛɪᴘᴏʀɴᴏ
-┃✪│❍ᴀɴᴛɪsᴛɪᴄᴋ
-┃✪│❍ᴀɴᴛɪᴘᴜʀɢᴇᴜʀ
-┃✪│❍ᴀɴᴛɪʀᴇᴀᴄᴛ
-┃✪│❍ᴀɴᴛɪᴅᴇʟᴇᴛᴇ
-┃✪│❍ᴀɴᴛɪʙᴏᴛ
-┃✪│❍ᴀɴᴛɪɪɴsᴜʟᴛ
-┃✪│❍ᴀɴᴛɪᴘʀɪᴠᴀᴛᴇ
-╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍〔📥𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗 〕
-╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍ᴛɪᴋᴛᴏᴋ
-┃✪│❍ᴀᴘᴋ
-┃✪│❍ᴘʟᴀʏ
-┃✪│❍ʏᴛsᴇᴀʀᴄʜ
-╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍〔✨️𝗖𝗢𝗡𝗩𝗘𝗥𝗦𝗜𝗢𝗡 〕
-╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍ᴛᴏᴍᴘ4
-┃✪│❍ᴛᴏᴍᴘ3
-┃✪│❍ᴛᴏɪᴍɢ
-┃✪│❍ᴛᴏᴜʀʟ
-╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍〔🔮𝗧𝗘𝗫𝗧/𝗚𝗙𝗫 〕
-╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍ɢʟɪᴛᴄʜᴛᴇxᴛ
-┃✪│❍ᴡʀɪᴛᴇᴛᴇxᴛ
-┃✪│❍ᴀᴅᴠᴀɴᴄᴇᴅɢʟᴏᴡ
-┃✪│❍ᴛʏᴘᴏɢʀᴀᴘʜʏᴛᴇxᴛ
-┃✪│❍ᴘɪxᴇʟɢʟɪᴛᴄʜ
-┃✪│❍ɴᴇᴏɴɢʟɪᴛᴄʜ
-┃✪│❍ғʟᴀɢᴛᴇxᴛ
-┃✪│❍ғʟᴀɢ3ᴅᴛᴇxᴛ
-┃✪│❍ᴅᴇʟᴇᴛɪɴɢᴛᴇxᴛ
-┃✪│❍ʙʟᴀᴄᴋᴘɪɴᴋsᴛʏʟᴇ
-┃✪│❍ɢʟᴏᴡɪɴɢᴛᴇxᴛ
-┃✪│❍ᴜɴᴅᴇʀᴡᴀᴛᴇʀᴛᴇxᴛ
-┃✪│❍ʟᴏɢᴏᴍᴀʀᴋᴇʀ
-┃✪│❍ᴄᴀʀᴛᴏᴏɴsᴛʏʟᴇ
-┃✪│❍ᴘᴀᴘᴇʀᴄᴜᴛsᴛʏʟᴇ
-┃✪│❍ᴡᴀᴛᴇʀᴄᴏʟᴏʀᴛᴇxᴛ
-┃✪│❍ɢᴀʟᴀxʏsᴛʏʟᴇ
-┃✪│❍ɢғx1
-┃✪│❍ɢғx2
-┃✪│❍ɢғx3
-┃✪│❍ɢғx4
-┃✪│❍ɢғx5
-┃✪│❍ɢғx6
-┃✪│❍ɢғx7
-┃✪│❍ɢғx8
-┃✪│❍ɢғx9
-┃✪│❍ɢғx10
-┃✪│❍ɢғx11
-┃✪│❍ɢғx12
-╭━━━━━━━━━━━━━━━━━≽
-┃✪│❍〔🎮𝗚𝗔𝗠𝗘 〕
-╰━━━━━━━━━━━━━━━━━≽
-┃✪│❍ʜᴀɴɢᴍᴀɴ
-┃✪│❍ᴛɪᴄᴛᴀᴄᴛᴏᴇ
-┃✪│❍ᴅɪᴄᴇ
-┃✪│ ᴄᴏɪɴ
-┃✪│❍ʀᴘs
-┃✪│❍ʀᴘsʟs
-┃✪│❍ɴᴜᴍʙᴀᴛᴛʟᴇ
-┃✪│❍ᴇᴍᴏᴊɪǫᴜɪᴢ
-┃✪│❍ɢᴜᴇss
-┃✪│❍ᴛʀɪᴠɪᴀ
-╰━━━━━━━━━━━━━━━━━≽
-> ©σρƚιɱυʂ-xɱԃ 2026 Ⴆყ 𝐌ꝛ 𝛁𝚫𝚪𝚴𝚯𝚾•𝚸𝚪𝚰𝚳𝚵𝚵
-
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝐎𝐏𝐓𝐈𝐌𝐔𝐒-𝐗𝐌𝐃
 `;
 
     const fakeSystem = {
